@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import {LocalDataSource, ServerDataSource} from 'ng2-smart-table';
 
 import { SmartTableData } from '../../../@core/data/smart-table';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {TipoModeloService} from "../../../services/TipoModelo/TipoModeloService";
+import {ServiceConstants} from "../../../constants/ServiceConstants";
 
 @Component({
   selector: 'tipo-modelo-table',
@@ -10,12 +12,8 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./tipo-modelo.component.scss'],
 })
 export class TipoModeloComponent {
-
-  private GET_REST_API_SERVER = "http://localhost:8081/app/tipoModelo";
-
-  public sendGetRequest(){
-    return this.httpClient.get(this.GET_REST_API_SERVER);
-  }
+  nombreForm: string = '';
+  mantenedor: string = "Tipo Modelo";
 
   settings = {
     add: {
@@ -32,31 +30,83 @@ export class TipoModeloComponent {
       deleteButtonContent: '<i class="nb-trash"></i>',
       confirmDelete: true,
     },
+    pager: {
+      display: true // set to false if no need for pagination
+    },
+    actions: {
+      columnTitle: 'Acciones',
+      add: false,
+      edit: false,
+      delete: true,
+      custom: [],
+      position: 'left',
+    },
     columns: {
       id: {
         title: 'ID',
         type: 'number',
+        filter: false
       },
       nombre: {
         title: 'Nombre',
         type: 'string',
+        filter: false
       }
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData, private httpClient: HttpClient) {
-    this.sendGetRequest().subscribe((data: any[])=>{
-      this.source.load(data['tipoModelos']);
+  constructor(private service: SmartTableData,private tipoModeloService : TipoModeloService,private httpClient: HttpClient) {
+    this.loadInitialData();
+  }
+
+  private loadInitialData() {
+
+
+    this.tipoModeloService.sendGetRequest().subscribe((data: any[]) => {
+      this.source = new ServerDataSource(this.httpClient,
+        {
+          endPoint: ServiceConstants.GET_TIPO_MODELO_PATH, //full-url-for-endpoint without any query strings
+          dataKey: 'tipoModelos',
+          pagerPageKey: 'page',
+          pagerLimitKey: 'size',
+          totalKey: 'totalItems', //  total records returned in response path
+        });
     })
+
   }
 
   onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
+    console.log('sss');
+    if (window.confirm('¿Confirma que desea eliminar este registro?')) {
       event.confirm.resolve();
     } else {
       event.confirm.reject();
     }
   }
+
+  onCreate(event): void {
+    if (window.confirm('¿Confirma que desea grabar este registro?')) {
+      event.confirm.resolve();
+    } else {
+      event.confirm.reject();
+    }
+  }
+
+  shouldDisableSaveButton():boolean{
+    return this.nombreForm === '';
+  }
+
+  saveButton(){
+
+    this.tipoModeloService.saveTipoModelo(this.nombreForm).subscribe((data: any[]) => {
+      this.tipoModeloService.sendGetRequest().subscribe((data: any[]) => {
+        this.source.load(data['tipoModelos']);
+      })
+    })
+    console.log('error');
+  }
+
+
 }
