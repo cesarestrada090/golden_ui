@@ -5,19 +5,27 @@
   <nb-card-body>
     <div class="col-lg-12">
       <nb-card>
-        <nb-card-header>Agregar {{mantenedor}}</nb-card-header>
+        <nb-card-header>{{getOperacion()}} {{mantenedor}}</nb-card-header>
         <nb-card-body>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="idForm" nbInput disabled fullWidth placeholder="id">
+          </div>
           <div class="full-name-inputs">
             <input type="text" [(ngModel)]="nombreForm" nbInput fullWidth placeholder="Nombre Tipo Modelo">
           </div>
-          <button (click)="saveButton()"  [disabled]="shouldDisableSaveButton()" nbButton [status]="'primary'">
-            Grabar
-          </button>
+          <div class="buttons-row">
+            <button (click)="saveButton()"  [disabled]="shouldDisableSaveButton()" nbButton [status]="'primary'">
+              {{getOperacion()}}
+            </button>
+            <button (click)="cleanForm()" nbButton [status]="'warning'">
+              Limpiar
+            </button>
+          </div>
         </nb-card-body>
       </nb-card>
     </div>
 
-    <ng2-smart-table  [settings]="settings" [source]="source"  (deleteConfirm)="onDeleteConfirm($event)">
+    <ng2-smart-table  (userRowSelect)="onSelectRow($event)" [settings]="settings" [source]="source"  (deleteConfirm)="onDeleteConfirm($event)">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>

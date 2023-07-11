@@ -12,6 +12,7 @@ import {ServiceConstants} from "../../../constants/ServiceConstants";
   styleUrls: ['./tipo-modelo.component.scss'],
 })
 export class TipoModeloComponent {
+  idForm: string = '';
   nombreForm: string = '';
   mantenedor: string = "Tipo Modelo";
 
@@ -86,6 +87,12 @@ export class TipoModeloComponent {
     }
   }
 
+  onSelectRow(event): void {
+    console.log(event);
+    this.idForm = event.data.id;
+    this.nombreForm = event.data.nombre;
+  }
+
   onCreate(event): void {
     if (window.confirm('¿Confirma que desea grabar este registro?')) {
       event.confirm.resolve();
@@ -94,19 +101,32 @@ export class TipoModeloComponent {
     }
   }
 
+  getOperacion(): string {
+    return this.idForm === '' ? 'Grabar' : 'Actualizar';
+  }
+
   shouldDisableSaveButton():boolean{
     return this.nombreForm === '';
   }
 
   saveButton(){
-
-    this.tipoModeloService.saveTipoModelo(this.nombreForm).subscribe((data: any[]) => {
-      this.tipoModeloService.sendGetRequest().subscribe((data: any[]) => {
-        this.source.load(data['tipoModelos']);
-      })
-    })
-    console.log('error');
+    if(this.idForm === ''){
+      this.tipoModeloService.saveTipoModelo(this.nombreForm).subscribe((data: any[]) => {
+        this.tipoModeloService.sendGetRequest().subscribe((data: any[]) => {
+          this.source.load(data['tipoModelos']);
+        })
+      });
+    } else {
+      this.tipoModeloService.updateTipoModelo(this.idForm , this.nombreForm).subscribe((data: any[]) => {
+        this.tipoModeloService.sendGetRequest().subscribe((data: any[]) => {
+          this.source.load(data['tipoModelos']);
+        })
+      });
+    }
   }
 
-
+  cleanForm(){
+    this.idForm = '';
+    this.nombreForm = '';
+  }
 }

@@ -22,10 +22,12 @@ export class TipoModeloService {
 
   public saveTipoModelo(nombre : string){
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
-
     return this.httpClient.post(ServiceConstants.GET_TIPO_MODELO_PATH,{ 'nombre': nombre},{ headers: headers});
+  }
 
+  public updateTipoModelo(id : string , nombre : string){
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.put(ServiceConstants.GET_TIPO_MODELO_PATH+'/'+id,{ 'id': id,'nombre': nombre},{ headers: headers});
   }
 
 
