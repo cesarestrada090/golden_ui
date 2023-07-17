@@ -59,8 +59,8 @@ const routes: Routes = [{
         .then(m => m.EditorsModule),
     },
     {
-      path: 'tables',
-      loadChildren: () => import('./tables/tables.module')
+      path: 'general',
+      loadChildren: () => import('./general/tables.module')
         .then(m => m.TablesModule),
     },
     {

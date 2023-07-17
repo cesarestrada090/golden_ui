@@ -12,35 +12,35 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Tipo Suministro',
-        link: '/pages/tables/tipo-suministro',
+        link: '/pages/general/tipo-suministro',
       },
       {
         title: 'Estado Suministro',
-        link: '/pages/tables/estado-suministro',
+        link: '/pages/general/estado-suministro',
       },
       {
         title: 'Tipo Modelo',
-        link: '/pages/tables/tipo-modelo',
+        link: '/pages/general/tipo-modelo',
       },
       {
         title: 'Estado Equipo',
-        link: '/pages/tables/estado-equipo',
+        link: '/pages/general/estado-equipo',
       },
       {
         title: 'Estado Caso Técnico',
-        link: '/pages/tables/estado-caso',
+        link: '/pages/general/estado-caso',
       },
       {
         title: 'Estado Proveedor Servicio',
-        link: '/pages/tables/estado-proveedor',
+        link: '/pages/general/estado-proveedor',
       },
       {
         title: 'Estado Sede',
-        link: '/pages/tables/estado-sede',
+        link: '/pages/general/estado-sede',
       },
       {
         title: 'Estado Detalle Visita',
-        link: '/pages/tables/estado-detalle',
+        link: '/pages/general/estado-detalle',
       }
     ],
   },
@@ -50,7 +50,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Estado Detalle Visita',
-        link: '/pages/tables/estado-detalle',
+        link: '/pages/general/estado-detalle',
       },
     ],
   },
