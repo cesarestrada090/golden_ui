@@ -49,8 +49,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'shuffle-2-outline',
     children: [
       {
-        title: 'Estado Detalle Visita',
-        link: '/pages/general/estado-detalle',
+        title: 'Área',
+        link: '/pages/configuracion/area',
       },
     ],
   },

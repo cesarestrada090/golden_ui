@@ -44,6 +44,19 @@ export class ServiceConstants {
     return this.GET_API_PATH + '/tipoSuministro';
   }
 
+
+  // CONFIGURATION
+
+  public static get GET_AREA_PATH() : string {
+    return this.GET_API_PATH + '/area';
+  }
+
+
+
+
+
+
+
   public static get GET_DELETE_CONFIRM_MESSAGE() : string {
     return '¿Confirma que desea eliminar este registro?';
   }

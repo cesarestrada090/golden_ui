@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { MiscellaneousComponent } from './miscellaneous.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import {AreaComponent} from "./area/area.component";
 
 const routes: Routes = [
   {
@@ -10,8 +11,8 @@ const routes: Routes = [
     component: MiscellaneousComponent,
     children: [
       {
-        path: '404',
-        component: NotFoundComponent,
+        path: 'area',
+        component: AreaComponent
       },
     ],
   },
