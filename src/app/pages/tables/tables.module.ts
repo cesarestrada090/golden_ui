@@ -11,6 +11,9 @@ import {TipoSuministroService} from "../../services/TipoSuministro/TipoSuministr
 import {EstadoEquipoService} from "../../services/EstadoEquipo/EstadoEquipoService";
 import {EstadoCasoTecnicoService} from "../../services/EstadoCasoTecnico/EstadoCasoTecnicoService";
 import {EstadoProveedorService} from "../../services/EstadoProveedor/EstadoProveedorService";
+import {EstadoSedeService} from "../../services/EstadoSede/EstadoSedeService";
+import {EstadoDetalleService} from "../../services/EstadoDetalle/EstadoDetalleService";
+import {EstadoSuministroService} from "../../services/EstadoSuministro/EstadoSuministroService";
 
 @NgModule({
   imports: [
@@ -28,6 +31,14 @@ import {EstadoProveedorService} from "../../services/EstadoProveedor/EstadoProve
     ...routedComponents,
     FsIconComponent,
   ],
-  providers: [TipoModeloService,TipoSuministroService,EstadoEquipoService,EstadoCasoTecnicoService,EstadoProveedorService]
+  providers: [TipoModeloService,
+    TipoSuministroService,
+    EstadoEquipoService,
+    EstadoCasoTecnicoService,
+    EstadoProveedorService,
+    EstadoSedeService,
+    EstadoDetalleService,
+    EstadoSuministroService
+  ]
 })
 export class TablesModule { }

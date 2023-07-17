@@ -9,6 +9,9 @@ import {TipoSuministroComponent} from "./tipo-suministro/tipo-suministro.compone
 import {EstadoEquipoComponent} from "./estado-equipo/estado-equipo.component";
 import {EstadoCasoComponent} from "./estado-caso/estado-caso.component";
 import {EstadoProveedorComponent} from "./estado-proveedor/estado-proveedor.component";
+import {EstadoSedeComponent} from "./estado-sede/estado-sede.component";
+import {EstadoDetalleComponent} from "./estado-detalle/estado-detalle.component";
+import {EstadoSuministroComponent} from "./estado-suministro/estado-suministro.component";
 
 const routes: Routes = [{
   path: '',
@@ -17,6 +20,10 @@ const routes: Routes = [{
     {
       path: 'tipo-suministro',
       component: TipoSuministroComponent,
+    },
+    {
+      path: 'estado-suministro',
+      component: EstadoSuministroComponent,
     },
     {
       path: 'tipo-modelo',
@@ -33,6 +40,14 @@ const routes: Routes = [{
     {
       path: 'estado-proveedor',
       component: EstadoProveedorComponent,
+    },
+    {
+      path: 'estado-sede',
+      component: EstadoSedeComponent
+    },
+    {
+      path: 'estado-detalle',
+      component: EstadoDetalleComponent
     }
   ],
 }];
@@ -51,5 +66,8 @@ export const routedComponents = [
   EstadoEquipoComponent,
   EstadoCasoComponent,
   EstadoProveedorComponent,
+  EstadoSedeComponent,
+  EstadoDetalleComponent,
+  EstadoSuministroComponent,
   TreeGridComponent
 ];
