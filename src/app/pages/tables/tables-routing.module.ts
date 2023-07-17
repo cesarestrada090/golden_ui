@@ -8,6 +8,7 @@ import {TipoModeloComponent} from "./tipo-modelo/tipo-modelo.component";
 import {TipoSuministroComponent} from "./tipo-suministro/tipo-suministro.component";
 import {EstadoEquipoComponent} from "./estado-equipo/estado-equipo.component";
 import {EstadoCasoComponent} from "./estado-caso/estado-caso.component";
+import {EstadoProveedorComponent} from "./estado-proveedor/estado-proveedor.component";
 
 const routes: Routes = [{
   path: '',
@@ -28,6 +29,10 @@ const routes: Routes = [{
     {
       path: 'estado-caso',
       component: EstadoCasoComponent,
+    },
+    {
+      path: 'estado-proveedor',
+      component: EstadoProveedorComponent,
     }
   ],
 }];
@@ -45,5 +50,6 @@ export const routedComponents = [
   TipoSuministroComponent,
   EstadoEquipoComponent,
   EstadoCasoComponent,
+  EstadoProveedorComponent,
   TreeGridComponent
 ];

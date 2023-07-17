@@ -25,6 +25,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Estado Caso Técnico',
         link: '/pages/tables/estado-caso',
+      },
+      {
+        title: 'Estado Proveedor Servicio',
+        link: '/pages/tables/estado-proveedor',
       }
     ],
   },

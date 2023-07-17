@@ -10,6 +10,7 @@ import {FormsModule} from "@angular/forms";
 import {TipoSuministroService} from "../../services/TipoSuministro/TipoSuministroService";
 import {EstadoEquipoService} from "../../services/EstadoEquipo/EstadoEquipoService";
 import {EstadoCasoTecnicoService} from "../../services/EstadoCasoTecnico/EstadoCasoTecnicoService";
+import {EstadoProveedorService} from "../../services/EstadoProveedor/EstadoProveedorService";
 
 @NgModule({
   imports: [
@@ -27,6 +28,6 @@ import {EstadoCasoTecnicoService} from "../../services/EstadoCasoTecnico/EstadoC
     ...routedComponents,
     FsIconComponent,
   ],
-  providers: [TipoModeloService,TipoSuministroService,EstadoEquipoService,EstadoCasoTecnicoService]
+  providers: [TipoModeloService,TipoSuministroService,EstadoEquipoService,EstadoCasoTecnicoService,EstadoProveedorService]
 })
 export class TablesModule { }

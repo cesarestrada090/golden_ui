@@ -27,6 +27,9 @@ export class ServiceConstants {
   public static get GET_CASO_TECNICO_PATH() : string {
     return this.GET_API_PATH + '/estadoCasoTecnico';
   }
+  public static get GET_ESTADO_PROVEEDOR_PATH() : string {
+    return this.GET_API_PATH + '/estadoProveedorServicio';
+  }
   public static get GET_TIPO_SUMINISTRO_PATH() : string {
     return this.GET_API_PATH + '/tipoSuministro';
   }
