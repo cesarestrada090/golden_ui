@@ -7,21 +7,25 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
 
   {
-    title: 'Mantenedores',
+    title: 'General',
     icon: 'grid-outline',
     children: [
       {
-        title: 'Smart Table',
-        link: '/pages/tables/smart-table',
+        title: 'Tipo Suministro',
+        link: '/pages/tables/tipo-suministro',
       },
       {
         title: 'Tipo Modelo',
         link: '/pages/tables/tipo-modelo',
       },
       {
-        title: 'Tree Grid',
-        link: '/pages/tables/tree-grid',
+        title: 'Estado Equipo',
+        link: '/pages/tables/estado-equipo',
       },
+      {
+        title: 'Estado Caso Técnico',
+        link: '/pages/tables/estado-caso',
+      }
     ],
   },
   {

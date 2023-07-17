@@ -5,17 +5,18 @@ import { SmartTableData } from '../../../@core/data/smart-table';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {TipoModeloService} from "../../../services/TipoModelo/TipoModeloService";
 import {ServiceConstants} from "../../../constants/ServiceConstants";
+import {EstadoEquipoService} from "../../../services/EstadoEquipo/EstadoEquipoService";
 
 @Component({
-  selector: 'tipo-modelo-table',
-  templateUrl: './tipo-modelo.component.html',
-  styleUrls: ['./tipo-modelo.component.scss'],
+  selector: 'estado-equipo-table',
+  templateUrl: './estado-equipo.component.html',
+  styleUrls: ['./estado-equipo.component.scss'],
 })
-export class TipoModeloComponent {
+export class EstadoEquipoComponent {
   idForm: string = '';
-  nombreForm: string = '';
-  mantenedor: string = "Tipo Modelo";
-  responseListName: string = "tipoModelos";
+  nombreEstado: string = '';
+  mantenedor: string = "Estado Equipo";
+  responseListName: string = "estadoEquipos";
   placeholder: string = 'Nombre ' + this.mantenedor;
 
   settings = {
@@ -50,8 +51,8 @@ export class TipoModeloComponent {
         type: 'number',
         filter: false
       },
-      nombre: {
-        title: 'Nombre',
+      estado: {
+        title: 'Estado',
         type: 'string',
         filter: false
       }
@@ -60,17 +61,17 @@ export class TipoModeloComponent {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData,private tipoModeloService : TipoModeloService,private httpClient: HttpClient) {
+  constructor(private service: SmartTableData,private estadoEquipoService : EstadoEquipoService,private httpClient: HttpClient) {
     this.loadInitialData();
   }
 
   private loadInitialData() {
 
 
-    this.tipoModeloService.sendGetRequest().subscribe((data: any[]) => {
+    this.estadoEquipoService.sendGetRequest().subscribe((data: any[]) => {
       this.source = new ServerDataSource(this.httpClient,
         {
-          endPoint: ServiceConstants.GET_TIPO_MODELO_PATH, //full-url-for-endpoint without any query strings
+          endPoint: ServiceConstants.GET_ESTADO_EQUIPO_PATH, //full-url-for-endpoint without any query strings
           dataKey: this.responseListName,
           pagerPageKey: 'page',
           pagerLimitKey: 'size',
@@ -90,9 +91,8 @@ export class TipoModeloComponent {
   }
 
   onSelectRow(event): void {
-    console.log(event);
     this.idForm = event.data.id;
-    this.nombreForm = event.data.nombre;
+    this.nombreEstado = event.data.estado;
   }
 
   onCreate(event): void {
@@ -108,19 +108,19 @@ export class TipoModeloComponent {
   }
 
   shouldDisableSaveButton():boolean{
-    return this.nombreForm === '';
+    return this.nombreEstado === '';
   }
 
   saveButton(){
     if(this.idForm === ''){
-      this.tipoModeloService.saveTipoModelo(this.nombreForm).subscribe((data: any[]) => {
-        this.tipoModeloService.sendGetRequest().subscribe((data: any[]) => {
+      this.estadoEquipoService.save(this.nombreEstado).subscribe((data: any[]) => {
+        this.estadoEquipoService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
       });
     } else {
-      this.tipoModeloService.updateTipoModelo(this.idForm , this.nombreForm).subscribe((data: any[]) => {
-        this.tipoModeloService.sendGetRequest().subscribe((data: any[]) => {
+      this.estadoEquipoService.update(this.idForm , this.nombreEstado).subscribe((data: any[]) => {
+        this.estadoEquipoService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
       });
@@ -129,6 +129,6 @@ export class TipoModeloComponent {
 
   cleanForm(){
     this.idForm = '';
-    this.nombreForm = '';
+    this.nombreEstado = '';
   }
 }

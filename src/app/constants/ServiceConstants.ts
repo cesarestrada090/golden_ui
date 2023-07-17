@@ -20,5 +20,22 @@ export class ServiceConstants {
   public static get GET_TIPO_MODELO_PATH() : string {
     return this.GET_API_PATH + '/tipoModelo';
   }
+  public static get GET_ESTADO_EQUIPO_PATH() : string {
+    return this.GET_API_PATH + '/estadoEquipo';
+  }
 
+  public static get GET_CASO_TECNICO_PATH() : string {
+    return this.GET_API_PATH + '/estadoCasoTecnico';
+  }
+  public static get GET_TIPO_SUMINISTRO_PATH() : string {
+    return this.GET_API_PATH + '/tipoSuministro';
+  }
+
+  public static get GET_DELETE_CONFIRM_MESSAGE() : string {
+    return '¿Confirma que desea eliminar este registro?';
+  }
+
+  public static get GET_SAVE_CONFIRM_MESSAGE() : string {
+    return '¿Confirma que desea grabar este registro?';
+  }
 }

@@ -3,19 +3,19 @@ import {LocalDataSource, ServerDataSource} from 'ng2-smart-table';
 
 import { SmartTableData } from '../../../@core/data/smart-table';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {TipoModeloService} from "../../../services/TipoModelo/TipoModeloService";
 import {ServiceConstants} from "../../../constants/ServiceConstants";
+import {TipoSuministroService} from "../../../services/TipoSuministro/TipoSuministroService";
 
 @Component({
-  selector: 'tipo-modelo-table',
-  templateUrl: './tipo-modelo.component.html',
-  styleUrls: ['./tipo-modelo.component.scss'],
+  selector: 'tipo-suministro-table',
+  templateUrl: './tipo-suministro.component.html',
+  styleUrls: ['./tipo-suministro.component.scss'],
 })
-export class TipoModeloComponent {
+export class TipoSuministroComponent {
   idForm: string = '';
   nombreForm: string = '';
-  mantenedor: string = "Tipo Modelo";
-  responseListName: string = "tipoModelos";
+  mantenedor: string = "Tipo Suministro";
+  responseListName: string = "tipoSuministros";
   placeholder: string = 'Nombre ' + this.mantenedor;
 
   settings = {
@@ -60,17 +60,17 @@ export class TipoModeloComponent {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData,private tipoModeloService : TipoModeloService,private httpClient: HttpClient) {
+  constructor(private service: SmartTableData,private tipoSuministroService : TipoSuministroService,private httpClient: HttpClient) {
     this.loadInitialData();
   }
 
   private loadInitialData() {
 
 
-    this.tipoModeloService.sendGetRequest().subscribe((data: any[]) => {
+    this.tipoSuministroService.sendGetRequest().subscribe((data: any[]) => {
       this.source = new ServerDataSource(this.httpClient,
         {
-          endPoint: ServiceConstants.GET_TIPO_MODELO_PATH, //full-url-for-endpoint without any query strings
+          endPoint: ServiceConstants.GET_TIPO_SUMINISTRO_PATH, //full-url-for-endpoint without any query strings
           dataKey: this.responseListName,
           pagerPageKey: 'page',
           pagerLimitKey: 'size',
@@ -81,7 +81,6 @@ export class TipoModeloComponent {
   }
 
   onDeleteConfirm(event): void {
-    console.log('sss');
     if (window.confirm(ServiceConstants.GET_DELETE_CONFIRM_MESSAGE)) {
       event.confirm.resolve();
     } else {
@@ -113,14 +112,14 @@ export class TipoModeloComponent {
 
   saveButton(){
     if(this.idForm === ''){
-      this.tipoModeloService.saveTipoModelo(this.nombreForm).subscribe((data: any[]) => {
-        this.tipoModeloService.sendGetRequest().subscribe((data: any[]) => {
+      this.tipoSuministroService.saveTipoSuministro(this.nombreForm).subscribe((data: any[]) => {
+        this.tipoSuministroService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
       });
     } else {
-      this.tipoModeloService.updateTipoModelo(this.idForm , this.nombreForm).subscribe((data: any[]) => {
-        this.tipoModeloService.sendGetRequest().subscribe((data: any[]) => {
+      this.tipoSuministroService.updateTipoSuministro(this.idForm , this.nombreForm).subscribe((data: any[]) => {
+        this.tipoSuministroService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
       });
