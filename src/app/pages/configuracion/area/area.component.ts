@@ -123,14 +123,21 @@ export class AreaComponent {
         this.areaService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
-      });
+      },this.manejarErrorSave());
     } else {
       this.areaService.update(this.idForm , this.nombreArea,this.ceco).subscribe((data: any[]) => {
         this.areaService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
-      });
+      },this.manejarErrorSave());
     }
+  }
+
+  private manejarErrorSave() {
+    return error => {
+      window.alert(this.mantenedor + ' repetido, Ingrese otros valores') ;
+      console.log(error);
+    };
   }
 
   cleanForm(){

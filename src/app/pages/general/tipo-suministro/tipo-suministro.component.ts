@@ -116,14 +116,21 @@ export class TipoSuministroComponent {
         this.tipoSuministroService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
-      });
+      },this.manejarErrorSave());
     } else {
       this.tipoSuministroService.updateTipoSuministro(this.idForm , this.nombreForm).subscribe((data: any[]) => {
         this.tipoSuministroService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
-      });
+      },this.manejarErrorSave());
     }
+  }
+
+  private manejarErrorSave() {
+    return error => {
+      window.alert(this.mantenedor + ' repetido, Ingrese otros valores') ;
+      console.log(error);
+    };
   }
 
   cleanForm(){

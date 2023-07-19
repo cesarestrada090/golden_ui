@@ -78,6 +78,13 @@ export class EstadoProveedorComponent {
 
   }
 
+  private manejarErrorSave() {
+    return error => {
+      window.alert(this.mantenedor + ' repetido, Ingrese otros valores') ;
+      console.log(error);
+    };
+  }
+
   onDeleteConfirm(event): void {
     if (window.confirm(ServiceConstants.GET_DELETE_CONFIRM_MESSAGE)) {
       event.confirm.resolve();
@@ -113,13 +120,13 @@ export class EstadoProveedorComponent {
         this.estadoProveedorService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
-      });
+      },this.manejarErrorSave());
     } else {
       this.estadoProveedorService.update(this.idForm , this.nombreEstado).subscribe((data: any[]) => {
         this.estadoProveedorService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
-      });
+      },this.manejarErrorSave());
     }
   }
 

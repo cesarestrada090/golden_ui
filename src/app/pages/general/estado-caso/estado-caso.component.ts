@@ -115,14 +115,20 @@ export class EstadoCasoComponent {
         this.estadoCasoTecnicoService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
-      });
+      },this.manejarErrorSave());
     } else {
       this.estadoCasoTecnicoService.update(this.idForm , this.nombreEstado).subscribe((data: any[]) => {
         this.estadoCasoTecnicoService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
-      });
+      },this.manejarErrorSave());
     }
+  }
+  private manejarErrorSave() {
+    return error => {
+      window.alert(this.mantenedor + ' repetido, Ingrese otros valores') ;
+      console.log(error);
+    };
   }
 
   cleanForm(){

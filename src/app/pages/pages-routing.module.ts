@@ -60,7 +60,7 @@ const routes: Routes = [{
     },
     {
       path: '',
-      redirectTo: 'dashboard',
+      redirectTo: 'general',
       pathMatch: 'full',
     },
     {
