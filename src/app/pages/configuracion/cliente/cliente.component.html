@@ -11,10 +11,10 @@
             <input type="text" [(ngModel)]="idForm" nbInput disabled fullWidth placeholder="id">
           </div>
           <div class="full-name-inputs">
-            <input type="text" [(ngModel)]="nombreForm" nbInput fullWidth placeholder='Nombre'>
+            <input type="text" [(ngModel)]="razonSocial" nbInput fullWidth placeholder='Ingrese Nombre'>
           </div>
           <div class="full-name-inputs">
-            <input type="text" [(ngModel)]="color" nbInput fullWidth placeholder="Color Suministro">
+            <input type="text" [(ngModel)]="ruc" nbInput fullWidth placeholder="Ingrese CECO">
           </div>
           <div class="buttons-row">
             <button (click)="saveButton()"  [disabled]="shouldDisableSaveButton()" nbButton [status]="'primary'">

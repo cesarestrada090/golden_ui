@@ -1,3 +1,5 @@
+import {NbGlobalPhysicalPosition} from "@nebular/theme";
+
 export class ServiceConstants {
 
   //Server Constant
@@ -6,7 +8,7 @@ export class ServiceConstants {
   }
 
   public static get GET_PORT() : string {
-    return ':8081';
+    return ':8080';
   }
 
   public static get GET_ROOT_PATH() : string {
@@ -51,10 +53,9 @@ export class ServiceConstants {
     return this.GET_API_PATH + '/area';
   }
 
-
-
-
-
+  public static get GET_CONTRATO_PATH() : string {
+    return this.GET_API_PATH + '/contrato';
+  }
 
 
   public static get GET_DELETE_CONFIRM_MESSAGE() : string {
@@ -64,4 +65,17 @@ export class ServiceConstants {
   public static get GET_SAVE_CONFIRM_MESSAGE() : string {
     return '¿Confirma que desea grabar este registro?';
   }
+
+  public static get GET_SAVE_NOTIFICATION_MESSAGE() : string {
+    return 'Grabado Correctamente';
+  }
+
+  public static get SAVE_TOAST_CONFIG()  {
+    return {
+      status: 'success',
+      duration: 3000,
+      position: NbGlobalPhysicalPosition.TOP_RIGHT,
+      preventDuplicates: true
+    };
+  };
 }

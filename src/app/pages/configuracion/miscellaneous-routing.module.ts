@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MiscellaneousComponent } from './miscellaneous.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 import {AreaComponent} from "./area/area.component";
+import {ContratoComponent} from "./contrato/contrato.component";
 
 const routes: Routes = [
   {
@@ -14,6 +14,10 @@ const routes: Routes = [
         path: 'area',
         component: AreaComponent
       },
+      {
+        path: 'contrato',
+        component: ContratoComponent
+      }
     ],
   },
 ];

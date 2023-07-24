@@ -14,6 +14,7 @@ import {TipoSuministroService} from "../../../services/TipoSuministro/TipoSumini
 export class TipoSuministroComponent {
   idForm: string = '';
   nombreForm: string = '';
+  color: string = '';
   mantenedor: string = "Tipo Suministro";
   responseListName: string = "tipoSuministros";
   placeholder: string = 'Nombre ' + this.mantenedor;
@@ -54,6 +55,11 @@ export class TipoSuministroComponent {
         title: 'Nombre',
         type: 'string',
         filter: false
+      },
+      color: {
+        title: 'Color',
+        type: 'string',
+        filter: false
       }
     },
   };
@@ -92,6 +98,7 @@ export class TipoSuministroComponent {
     console.log(event);
     this.idForm = event.data.id;
     this.nombreForm = event.data.nombre;
+    this.color = event.data.color;
   }
 
   onCreate(event): void {
@@ -103,22 +110,22 @@ export class TipoSuministroComponent {
   }
 
   getOperacion(): string {
-    return this.idForm === '' ? 'Grabar' : 'Actualizar';
+    return this.idForm === '' ? 'Crear' : 'Actualizar';
   }
 
   shouldDisableSaveButton():boolean{
-    return this.nombreForm === '';
+    return this.nombreForm === '' || this.color === '';
   }
 
   saveButton(){
     if(this.idForm === ''){
-      this.tipoSuministroService.saveTipoSuministro(this.nombreForm).subscribe((data: any[]) => {
+      this.tipoSuministroService.saveTipoSuministro(this.nombreForm, this.color).subscribe((data: any[]) => {
         this.tipoSuministroService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
       },this.manejarErrorSave());
     } else {
-      this.tipoSuministroService.updateTipoSuministro(this.idForm , this.nombreForm).subscribe((data: any[]) => {
+      this.tipoSuministroService.updateTipoSuministro(this.idForm , this.nombreForm, this.color).subscribe((data: any[]) => {
         this.tipoSuministroService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
@@ -136,5 +143,6 @@ export class TipoSuministroComponent {
   cleanForm(){
     this.idForm = '';
     this.nombreForm = '';
+    this.color = '';
   }
 }

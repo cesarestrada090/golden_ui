@@ -100,7 +100,7 @@ export class EstadoSedeComponent {
   }
 
   getOperacion(): string {
-    return this.idForm === '' ? 'Grabar' : 'Actualizar';
+    return this.idForm === '' ? 'Crear' : 'Actualizar';
   }
 
   shouldDisableSaveButton():boolean{

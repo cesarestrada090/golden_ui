@@ -2,20 +2,22 @@ import { Component } from '@angular/core';
 import {LocalDataSource, ServerDataSource} from 'ng2-smart-table';
 
 import { SmartTableData } from '../../../@core/data/smart-table';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ServiceConstants} from "../../../constants/ServiceConstants";
-import {EstadoProveedorService} from "../../../services/EstadoProveedor/EstadoProveedorService";
+import {EstadoCasoTecnicoService} from "../../../services/EstadoCasoTecnico/EstadoCasoTecnicoService";
+import {AreaService} from "../../../services/Area/AreaService";
 
 @Component({
-  selector: 'estado-proveedor-table',
-  templateUrl: './estado-proveedor.component.html',
-  styleUrls: ['./estado-proveedor.component.scss'],
+  selector: 'area-table',
+  templateUrl: './cliente.component.html',
+  styleUrls: ['./cliente.component.scss'],
 })
-export class EstadoProveedorComponent {
+export class ClienteComponent {
   idForm: string = '';
-  nombreEstado: string = '';
-  mantenedor: string = "Estado Proveedor Servicio";
-  responseListName: string = "estados";
+  razonSocial: string = '';
+  ruc: string = '';
+  mantenedor: string = "Área";
+  responseListName: string = "areas";
   placeholder: string = 'Nombre ' + this.mantenedor;
 
   settings = {
@@ -50,8 +52,13 @@ export class EstadoProveedorComponent {
         type: 'number',
         filter: false
       },
-      estado: {
-        title: 'Estado',
+      nombre: {
+        title: 'Nombre',
+        type: 'string',
+        filter: false
+      },
+      ceco: {
+        title: 'CECO',
         type: 'string',
         filter: false
       }
@@ -60,15 +67,17 @@ export class EstadoProveedorComponent {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData,private estadoProveedorService : EstadoProveedorService,private httpClient: HttpClient) {
+  constructor(private service: SmartTableData,private areaService : AreaService,private httpClient: HttpClient) {
     this.loadInitialData();
   }
 
   private loadInitialData() {
-    this.estadoProveedorService.sendGetRequest().subscribe((data: any[]) => {
+
+
+    this.areaService.sendGetRequest().subscribe((data: any[]) => {
       this.source = new ServerDataSource(this.httpClient,
         {
-          endPoint: ServiceConstants.GET_ESTADO_PROVEEDOR_PATH, //full-url-for-endpoint without any query strings
+          endPoint: ServiceConstants.GET_AREA_PATH, //full-url-for-endpoint without any query strings
           dataKey: this.responseListName,
           pagerPageKey: 'page',
           pagerLimitKey: 'size',
@@ -76,13 +85,6 @@ export class EstadoProveedorComponent {
         });
     })
 
-  }
-
-  private manejarErrorSave() {
-    return error => {
-      window.alert(this.mantenedor + ' repetido, Ingrese otros valores') ;
-      console.log(error);
-    };
   }
 
   onDeleteConfirm(event): void {
@@ -95,7 +97,8 @@ export class EstadoProveedorComponent {
 
   onSelectRow(event): void {
     this.idForm = event.data.id;
-    this.nombreEstado = event.data.estado;
+    this.razonSocial = event.data.nombre;
+    this.ruc = event.data.ceco;
   }
 
   onCreate(event): void {
@@ -111,27 +114,35 @@ export class EstadoProveedorComponent {
   }
 
   shouldDisableSaveButton():boolean{
-    return this.nombreEstado === '';
+    return this.razonSocial === '' || this.ruc === '' ;
   }
 
   saveButton(){
     if(this.idForm === ''){
-      this.estadoProveedorService.save(this.nombreEstado).subscribe((data: any[]) => {
-        this.estadoProveedorService.sendGetRequest().subscribe((data: any[]) => {
+      this.areaService.save(this.razonSocial,this.ruc).subscribe((data: any[]) => {
+        this.areaService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
       },this.manejarErrorSave());
     } else {
-      this.estadoProveedorService.update(this.idForm , this.nombreEstado).subscribe((data: any[]) => {
-        this.estadoProveedorService.sendGetRequest().subscribe((data: any[]) => {
+      this.areaService.update(this.idForm , this.razonSocial,this.ruc).subscribe((data: any[]) => {
+        this.areaService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
       },this.manejarErrorSave());
     }
   }
 
+  private manejarErrorSave() {
+    return error => {
+      window.alert(this.mantenedor + ' repetido, Ingrese otros valores') ;
+      console.log(error);
+    };
+  }
+
   cleanForm(){
     this.idForm = '';
-    this.nombreEstado = '';
+    this.razonSocial = '';
+    this.ruc = '';
   }
 }

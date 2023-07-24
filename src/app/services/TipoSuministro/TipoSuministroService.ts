@@ -10,7 +10,7 @@ export class TipoSuministroService {
   }
 
   public sendGetRequest(){
-    return this.httpClient.get(ServiceConstants.GET_TIPO_MODELO_PATH);
+    return this.httpClient.get(ServiceConstants.GET_TIPO_SUMINISTRO_PATH);
   }
 
   public sendGetRequestPaginated(page: number, size: number){
@@ -20,13 +20,13 @@ export class TipoSuministroService {
     return this.httpClient.get(ServiceConstants.GET_TIPO_SUMINISTRO_PATH,{params:queryParams});
   }
 
-  public saveTipoSuministro(nombre : string){
+  public saveTipoSuministro(nombre : string, color : string){
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.post(ServiceConstants.GET_TIPO_SUMINISTRO_PATH,{ 'nombre': nombre},{ headers: headers});
+    return this.httpClient.post(ServiceConstants.GET_TIPO_SUMINISTRO_PATH,{ 'nombre': nombre,'color': color},{ headers: headers});
   }
 
-  public updateTipoSuministro(id : string , nombre : string){
+  public updateTipoSuministro(id : string , nombre : string, color : string){
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.put(ServiceConstants.GET_TIPO_SUMINISTRO_PATH+'/'+id,{ 'id': id,'nombre': nombre},{ headers: headers});
+    return this.httpClient.put(ServiceConstants.GET_TIPO_SUMINISTRO_PATH+'/'+id,{ 'id': id,'nombre': nombre,'color': color},{ headers: headers});
   }
 }
