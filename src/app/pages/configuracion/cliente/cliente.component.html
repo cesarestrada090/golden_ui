@@ -11,11 +11,19 @@
             <input type="text" [(ngModel)]="idForm" nbInput disabled fullWidth placeholder="id">
           </div>
           <div class="full-name-inputs">
-            <input type="text" [(ngModel)]="razonSocial" nbInput fullWidth placeholder='Ingrese Nombre'>
+            <input type="text" [(ngModel)]="razonSocial" nbInput fullWidth placeholder='Ingrese Razon Social'>
           </div>
           <div class="full-name-inputs">
-            <input type="text" [(ngModel)]="ruc" nbInput fullWidth placeholder="Ingrese CECO">
+            <input type="text" [(ngModel)]="ruc" nbInput fullWidth placeholder="Ingrese RUC">
           </div>
+          <div class="full-name-inputs">
+            <nb-select *ngIf="clientesCbo" fullWidth (selectedChange)="changeClient($event)" selected="{{contratoId}}" >
+              <nb-option *ngFor="let option of clientesCbo" value="{{ option.id }}">
+                {{ option.nombre }}
+              </nb-option>
+            </nb-select>
+          </div>
+
           <div class="buttons-row">
             <button (click)="saveButton()"  [disabled]="shouldDisableSaveButton()" nbButton [status]="'primary'">
               {{getOperacion()}}
@@ -32,3 +40,13 @@
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Error</nb-card-header>
+    <nb-card-body><br>{{errorMsg}}<br></nb-card-body>
+    <nb-card-footer>
+      <button nbButton (click)="ref.close()">Ok</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

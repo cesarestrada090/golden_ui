@@ -6,9 +6,11 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ServiceConstants} from "../../../constants/ServiceConstants";
 import {EstadoCasoTecnicoService} from "../../../services/EstadoCasoTecnico/EstadoCasoTecnicoService";
 import {AreaService} from "../../../services/Area/AreaService";
+import {ClienteService} from "../../../services/Cliente/ClienteService";
+import {ContratoService} from "../../../services/Contrato/ContratoService";
 
 @Component({
-  selector: 'area-table',
+  selector: 'cliente-table',
   templateUrl: './cliente.component.html',
   styleUrls: ['./cliente.component.scss'],
 })
@@ -16,9 +18,16 @@ export class ClienteComponent {
   idForm: string = '';
   razonSocial: string = '';
   ruc: string = '';
-  mantenedor: string = "Área";
-  responseListName: string = "areas";
+  clientesCbo: any;
+  contratoId:number;
+  mantenedor: string = "Cliente";
+  responseListName: string = "clientes";
+  errorMsg: string = '';
   placeholder: string = 'Nombre ' + this.mantenedor;
+
+  changeClient(event){
+    this.contratoId = event;
+  }
 
   settings = {
     add: {
@@ -52,32 +61,66 @@ export class ClienteComponent {
         type: 'number',
         filter: false
       },
-      nombre: {
-        title: 'Nombre',
+      razonSocial: {
+        title: 'Razon Social',
         type: 'string',
         filter: false
       },
-      ceco: {
-        title: 'CECO',
+      ruc: {
+        title: 'ruc',
         type: 'string',
         filter: false
+      },
+      nombreContrato: {
+        title: 'Nombre Contrato',
+        type: 'string',
+        filter: false
+      },
+      fechaInicio: {
+        title: 'Fecha Inicio',
+        type: 'date',
+        filter: false,
+        class: 'colDate',
+        valuePrepareFunction: (cell: any, row: any) =>{
+          let parsedDate = new Date(cell);
+          new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
+          return parsedDate.toLocaleDateString();
+        }
+      },
+      fechaFin: {
+        title: 'Fecha Fin',
+        type: 'date',
+        filter: false,
+        class: 'colDate',
+        valuePrepareFunction: (cell: any, row: any) =>{
+          let parsedDate = new Date(cell);
+          new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
+          return parsedDate.toLocaleDateString();
+        }
       }
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData,private areaService : AreaService,private httpClient: HttpClient) {
+  constructor(private clienteService: ClienteService,
+              private contratoService : ContratoService,
+              private httpClient: HttpClient) {
     this.loadInitialData();
+
+    this.contratoService.sendGetRequest().subscribe((data: any[]) => {
+      this.clientesCbo = data['contratos'];
+      console.log(this.clientesCbo);
+    })
   }
 
   private loadInitialData() {
 
 
-    this.areaService.sendGetRequest().subscribe((data: any[]) => {
+    this.clienteService.sendGetRequest().subscribe((data: any[]) => {
       this.source = new ServerDataSource(this.httpClient,
         {
-          endPoint: ServiceConstants.GET_AREA_PATH, //full-url-for-endpoint without any query strings
+          endPoint: ServiceConstants.GET_CLIENTE_PATH, //full-url-for-endpoint without any query strings
           dataKey: this.responseListName,
           pagerPageKey: 'page',
           pagerLimitKey: 'size',
@@ -97,8 +140,9 @@ export class ClienteComponent {
 
   onSelectRow(event): void {
     this.idForm = event.data.id;
-    this.razonSocial = event.data.nombre;
-    this.ruc = event.data.ceco;
+    this.razonSocial = event.data.razonSocial;
+    this.ruc = event.data.ruc;
+    this.contratoId = event.data.contratoId;
   }
 
   onCreate(event): void {
@@ -114,19 +158,19 @@ export class ClienteComponent {
   }
 
   shouldDisableSaveButton():boolean{
-    return this.razonSocial === '' || this.ruc === '' ;
+    return this.razonSocial === '' || this.ruc === '';
   }
 
   saveButton(){
     if(this.idForm === ''){
-      this.areaService.save(this.razonSocial,this.ruc).subscribe((data: any[]) => {
-        this.areaService.sendGetRequest().subscribe((data: any[]) => {
+      this.clienteService.save(this.razonSocial,this.ruc,this.contratoId).subscribe((data: any[]) => {
+        this.clienteService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
       },this.manejarErrorSave());
     } else {
-      this.areaService.update(this.idForm , this.razonSocial,this.ruc).subscribe((data: any[]) => {
-        this.areaService.sendGetRequest().subscribe((data: any[]) => {
+      this.clienteService.update(this.idForm, this.razonSocial,this.ruc, this.contratoId).subscribe((data: any[]) => {
+        this.clienteService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
       },this.manejarErrorSave());

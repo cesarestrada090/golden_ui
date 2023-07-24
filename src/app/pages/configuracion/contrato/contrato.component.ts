@@ -6,7 +6,7 @@ import {ContratoService} from "../../../services/Contrato/ContratoService";
 import {NbComponentStatus, NbDialogService, NbToastrService} from "@nebular/theme";
 
 @Component({
-  selector: 'area-table',
+  selector: 'contrato-table',
   templateUrl: './contrato.component.html',
   styleUrls: ['./contrato.component.scss'],
 })

@@ -4,7 +4,7 @@ import {
   NbCardModule,
   NbDatepickerModule,
   NbIconModule,
-  NbInputModule,
+  NbInputModule, NbOptionModule, NbSelectModule,
   NbTreeGridModule
 } from '@nebular/theme';
 
@@ -19,6 +19,8 @@ import {TablesRoutingModule} from "../general/tables-routing.module";
 import {Ng2SmartTableModule} from "ng2-smart-table";
 import {ContratoComponent} from "./contrato/contrato.component";
 import {ContratoService} from "../../services/Contrato/ContratoService";
+import {ClienteService} from "../../services/Cliente/ClienteService";
+import {ClienteComponent} from "./cliente/cliente.component";
 
 @NgModule({
   imports: [
@@ -31,17 +33,21 @@ import {ContratoService} from "../../services/Contrato/ContratoService";
     NbInputModule,
     FormsModule,
     NbDatepickerModule,
+    NbCardModule,
     TablesRoutingModule,
     Ng2SmartTableModule,
+    NbOptionModule,
+    NbSelectModule,
   ],
   declarations: [
     MiscellaneousComponent,
     NotFoundComponent,
     AreaComponent,
-    ContratoComponent
+    ContratoComponent,
+    ClienteComponent
   ],
   providers: [
-    AreaService,ContratoService
+    AreaService,ContratoService,ClienteService
   ]
 })
 export class MiscellaneousModule { }

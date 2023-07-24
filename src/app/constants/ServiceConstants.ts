@@ -57,6 +57,9 @@ export class ServiceConstants {
     return this.GET_API_PATH + '/contrato';
   }
 
+  public static get GET_CLIENTE_PATH() : string {
+    return this.GET_API_PATH + '/cliente';
+  }
 
   public static get GET_DELETE_CONFIRM_MESSAGE() : string {
     return '¿Confirma que desea eliminar este registro?';
