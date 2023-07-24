@@ -4,11 +4,11 @@ export class ServiceConstants {
 
   //Server Constant
   public static get GET_API_HOST(){
-    return 'http://localhost';
+    return 'http://54.235.31.201';
   }
 
   public static get GET_PORT() : string {
-    return ':8080';
+    return ':8081';
   }
 
   public static get GET_ROOT_PATH() : string {
