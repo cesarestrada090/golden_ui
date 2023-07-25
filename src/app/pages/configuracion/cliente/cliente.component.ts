@@ -8,6 +8,7 @@ import {EstadoCasoTecnicoService} from "../../../services/EstadoCasoTecnico/Esta
 import {AreaService} from "../../../services/Area/AreaService";
 import {ClienteService} from "../../../services/Cliente/ClienteService";
 import {ContratoService} from "../../../services/Contrato/ContratoService";
+import {NbToastrService} from "@nebular/theme";
 
 @Component({
   selector: 'cliente-table',
@@ -105,13 +106,14 @@ export class ClienteComponent {
 
   constructor(private clienteService: ClienteService,
               private contratoService : ContratoService,
-              private httpClient: HttpClient) {
+              private httpClient: HttpClient,
+              private notificacionService: NbToastrService) {
     this.loadInitialData();
 
     this.contratoService.sendGetRequest().subscribe((data: any[]) => {
       this.clientesCbo = data['contratos'];
       console.log(this.clientesCbo);
-    })
+    });
   }
 
   private loadInitialData() {
@@ -166,12 +168,14 @@ export class ClienteComponent {
       this.clienteService.save(this.razonSocial,this.ruc,this.contratoId).subscribe((data: any[]) => {
         this.clienteService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
+          this.mostrarNotificacionGrabado()
         })
       },this.manejarErrorSave());
     } else {
       this.clienteService.update(this.idForm, this.razonSocial,this.ruc, this.contratoId).subscribe((data: any[]) => {
         this.clienteService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
+          this.mostrarNotificacionGrabado()
         })
       },this.manejarErrorSave());
     }
@@ -188,5 +192,12 @@ export class ClienteComponent {
     this.idForm = '';
     this.razonSocial = '';
     this.ruc = '';
+  }
+
+  private mostrarNotificacionGrabado() {
+    this.notificacionService.show(
+      '',
+      this.idForm == '' ? ServiceConstants.GET_SAVE_NOTIFICATION_MESSAGE : ServiceConstants.GET_UPDATE_NOTIFICATION_MESSAGE,
+      ServiceConstants.SAVE_TOAST_CONFIG);
   }
 }

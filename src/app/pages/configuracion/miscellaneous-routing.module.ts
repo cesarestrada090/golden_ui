@@ -6,6 +6,7 @@ import {AreaComponent} from "./area/area.component";
 import {ContratoComponent} from "./contrato/contrato.component";
 import {ClienteComponent} from "./cliente/cliente.component";
 import {UbicacionComponent} from "./ubicacion/ubicacion.component";
+import {SedeComponent} from "./sede/sede.component";
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'ubicacion',
         component: UbicacionComponent
+      },
+      {
+        path: 'sede',
+        component: SedeComponent
       }
     ],
   },

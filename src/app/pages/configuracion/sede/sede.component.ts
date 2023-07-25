@@ -1,24 +1,31 @@
 import {Component, TemplateRef} from '@angular/core';
 import {LocalDataSource, ServerDataSource} from 'ng2-smart-table';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ServiceConstants} from "../../../constants/ServiceConstants";
 import {ContratoService} from "../../../services/Contrato/ContratoService";
 import {NbComponentStatus, NbDialogService, NbToastrService} from "@nebular/theme";
+import {SedeService} from "../../../services/Sede/SedeService";
+import {EstadoSedeService} from "../../../services/EstadoSede/EstadoSedeService";
+import {UbicacionService} from "../../../services/Ubicacion/UbicacionService";
 
 @Component({
-  selector: 'contrato-table',
-  templateUrl: './contrato.component.html',
-  styleUrls: ['./contrato.component.scss'],
+  selector: 'sede-table',
+  templateUrl: './sede.component.html',
+  styleUrls: ['./sede.component.scss'],
 })
-export class ContratoComponent {
+export class SedeComponent {
   idForm: string = '';
   errorMsg: string = '';
   nombre: string = '';
-  fechaInicio: Date;
-  fechaFin: Date;
 
-  mantenedor: string = 'Contrato';
-  responseListName: string = 'contratos';
+  estadoSedeId: number;
+  estadoSedeCbo: any[];
+
+  ubicacionSedeId: number;
+  ubicacionSedeCbo: any[];
+
+  mantenedor: string = 'Sede';
+  responseListName: string = 'sedes';
   placeholder: string = 'Nombre ' + this.mantenedor;
   status: NbComponentStatus = 'success';
 
@@ -55,53 +62,51 @@ export class ContratoComponent {
         filter: false
       },
       nombre: {
-        title: 'Razon Social',
+        title: 'Nombre Sede',
         type: 'string',
         filter: false
       },
-      fechaInicio: {
-        title: 'Fecha Inicio',
-        type: 'date',
-        filter: false,
-        class: 'colDate',
-        valuePrepareFunction: (cell: any, row: any) =>{
-          let parsedDate = new Date(cell);
-          new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-          return parsedDate.toLocaleDateString();
-        }
+      estadoSede: {
+        title: 'Estado Sede',
+        type: 'string',
+        filter: false
       },
-      fechaFin: {
-        title: 'Fecha Fin',
-        type: 'date',
-        filter: false,
-        class: 'colDate',
-        valuePrepareFunction: (cell: any, row: any) =>{
-          let parsedDate = new Date(cell);
-          new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-          return parsedDate.toLocaleDateString();
-        }
+      direccionUbicacion: {
+        title: 'Dirección Sede',
+        type: 'string',
+        filter: false
       }
-    },
+    }
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private contratoService : ContratoService,
+  constructor(private sedeService : SedeService,
+              private estadoSedeService : EstadoSedeService,
+              private ubicacionService : UbicacionService,
               private httpClient: HttpClient,
               private dialogService: NbDialogService,
               private notificacionService: NbToastrService) {
     this.loadInitialData();
+
+    this.estadoSedeService.sendGetRequest().subscribe((data: any[]) => {
+      this.estadoSedeCbo = data['estados'];
+    });
+    this.ubicacionService.sendGetRequest().subscribe((data: any[]) => {
+      this.ubicacionSedeCbo = data['ubicacionSedes'];
+    });
+
   }
 
   private loadInitialData() {
-    this.contratoService.sendGetRequest().subscribe((data: any[]) => {
+    this.sedeService.sendGetRequest().subscribe((data: any[]) => {
       this.source = new ServerDataSource(this.httpClient,
         {
-          endPoint: ServiceConstants.GET_CONTRATO_PATH, //full-url-for-endpoint without any query strings
+          endPoint: ServiceConstants.GET_SEDE_PATH,
           dataKey: this.responseListName,
           pagerPageKey: 'page',
           pagerLimitKey: 'size',
-          totalKey: 'totalItems', //  total records returned in response path
+          totalKey: 'totalItems',
         });
     })
   }
@@ -117,8 +122,8 @@ export class ContratoComponent {
   onSelectRow(event): void {
     this.idForm = event.data.id;
     this.nombre = event.data.nombre;
-    this.fechaInicio = event.data.fechaInicio;
-    this.fechaFin = event.data.fechaFin;
+    this.estadoSedeId = event.data.estadoId;
+    this.ubicacionSedeId = event.data.ubicacionSedeId;
   }
 
   onCreate(event): void {
@@ -134,27 +139,21 @@ export class ContratoComponent {
   }
 
   shouldDisableSaveButton():boolean{
-    return this.nombre === '' || this.fechaInicio === null || this.fechaFin === null ;
+    return this.nombre === '' || this.estadoSedeId === null || this.ubicacionSedeId === null ;
   }
 
   saveButton(dialog: TemplateRef<any>){
 
-    if (this.fechaInicio && this.fechaFin && this.fechaInicio > this.fechaFin) {
-      this.errorMsg = 'Fecha inicio no puede ser mayor a la fecha fin';
-      this.dialogService.open(dialog);
-      return;
-    }
-
     if(this.idForm === ''){
-      this.contratoService.save(this.nombre,this.fechaInicio,this.fechaFin).subscribe((data: any[]) => {
-        this.contratoService.sendGetRequest().subscribe((data: any[]) => {
+      this.sedeService.save(this.nombre,this.ubicacionSedeId,this.estadoSedeId).subscribe((data: any[]) => {
+        this.sedeService.sendGetRequest().subscribe((data: any[]) => {
           this.mostrarNotificacionGrabado()
           this.source.load(data[this.responseListName]);
         })
       },this.manejarErrorSave());
     } else {
-      this.contratoService.update(this.idForm,this.nombre,this.fechaInicio,this.fechaFin).subscribe((data: any[]) => {
-        this.contratoService.sendGetRequest().subscribe((data: any[]) => {
+      this.sedeService.update(this.idForm,this.nombre,this.ubicacionSedeId,this.estadoSedeId).subscribe((data: any[]) => {
+        this.sedeService.sendGetRequest().subscribe((data: any[]) => {
           this.mostrarNotificacionGrabado()
           this.source.load(data[this.responseListName]);
         })
@@ -171,8 +170,8 @@ export class ContratoComponent {
 
   cleanForm(){
     this.idForm = '';
-    this.fechaInicio = null;
-    this.fechaFin = null;
+    this.ubicacionSedeId = null;
+    this.estadoSedeId = null;
     this.nombre = '';
   }
 
@@ -181,5 +180,13 @@ export class ContratoComponent {
       '',
       this.idForm == '' ? ServiceConstants.GET_SAVE_NOTIFICATION_MESSAGE : ServiceConstants.GET_UPDATE_NOTIFICATION_MESSAGE,
       ServiceConstants.SAVE_TOAST_CONFIG);
+  }
+
+  changeEstadoSede(event){
+    this.estadoSedeId = event;
+  }
+
+  changeUbicacionSede(event){
+    this.ubicacionSedeId = event;
   }
 }

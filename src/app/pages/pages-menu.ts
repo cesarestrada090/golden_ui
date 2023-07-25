@@ -60,6 +60,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },{
         title: 'Ubicación',
         link: '/pages/configuracion/ubicacion',
+      },{
+        title: 'Sedes',
+        link: '/pages/configuracion/sede',
       }
     ],
   }

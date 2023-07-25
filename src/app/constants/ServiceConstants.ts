@@ -52,6 +52,10 @@ export class ServiceConstants {
   public static get GET_AREA_PATH() : string {
     return this.GET_API_PATH + '/area';
   }
+  public static get GET_SEDE_PATH() : string {
+    return this.GET_API_PATH + '/sede';
+  }
+
 
   public static get GET_CONTRATO_PATH() : string {
     return this.GET_API_PATH + '/contrato';
