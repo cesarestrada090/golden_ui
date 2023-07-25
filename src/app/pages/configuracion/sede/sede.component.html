@@ -15,7 +15,7 @@
           </div>
 
           <div class="full-name-inputs">
-            <nb-select *ngIf="estadoSedeCbo" fullWidth (selectedChange)="changeEstadoSede($event)" selected="{{estadoSedeId}}" >
+            <nb-select placeholder="Estado Sede" *ngIf="estadoSedeCbo" fullWidth (selectedChange)="changeEstadoSede($event)" selected="{{estadoSedeId}}" >
               <nb-option *ngFor="let option of estadoSedeCbo" value="{{ option.id }}">
                 {{ option.estado }}
               </nb-option>
@@ -23,7 +23,7 @@
           </div>
 
           <div class="full-name-inputs">
-            <nb-select *ngIf="ubicacionSedeCbo" fullWidth (selectedChange)="changeUbicacionSede($event)" selected="{{ubicacionSedeId}}" >
+            <nb-select placeholder="Ubicación Sede" *ngIf="ubicacionSedeCbo" fullWidth (selectedChange)="changeUbicacionSede($event)" selected="{{ubicacionSedeId}}" >
               <nb-option *ngFor="let option of ubicacionSedeCbo" value="{{ option.id }}">
                 {{ option.nombre }}
               </nb-option>

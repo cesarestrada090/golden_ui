@@ -17,7 +17,7 @@
             <input type="text" [(ngModel)]="ruc" nbInput fullWidth placeholder="Ingrese RUC">
           </div>
           <div class="full-name-inputs">
-            <nb-select *ngIf="clientesCbo" fullWidth (selectedChange)="changeClient($event)" selected="{{contratoId}}" >
+            <nb-select placeholder="Contrato" *ngIf="clientesCbo" fullWidth (selectedChange)="changeClient($event)" selected="{{contratoId}}" >
               <nb-option *ngFor="let option of clientesCbo" value="{{ option.id }}">
                 {{ option.nombre }}
               </nb-option>
