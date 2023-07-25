@@ -21,6 +21,8 @@ import {ContratoComponent} from "./contrato/contrato.component";
 import {ContratoService} from "../../services/Contrato/ContratoService";
 import {ClienteService} from "../../services/Cliente/ClienteService";
 import {ClienteComponent} from "./cliente/cliente.component";
+import {UbicacionComponent} from "./ubicacion/ubicacion.component";
+import {UbicacionService} from "../../services/Ubicacion/UbicacionService";
 
 @NgModule({
   imports: [
@@ -44,10 +46,11 @@ import {ClienteComponent} from "./cliente/cliente.component";
     NotFoundComponent,
     AreaComponent,
     ContratoComponent,
-    ClienteComponent
+    ClienteComponent,
+    UbicacionComponent
   ],
   providers: [
-    AreaService,ContratoService,ClienteService
+    AreaService,ContratoService,ClienteService,UbicacionService
   ]
 })
 export class MiscellaneousModule { }

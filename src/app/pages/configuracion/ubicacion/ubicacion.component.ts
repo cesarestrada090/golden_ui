@@ -4,21 +4,24 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ServiceConstants} from "../../../constants/ServiceConstants";
 import {ContratoService} from "../../../services/Contrato/ContratoService";
 import {NbComponentStatus, NbDialogService, NbToastrService} from "@nebular/theme";
+import {UbicacionService} from "../../../services/Ubicacion/UbicacionService";
 
 @Component({
-  selector: 'contrato-table',
-  templateUrl: './contrato.component.html',
-  styleUrls: ['./contrato.component.scss'],
+  selector: 'ubicacion-table',
+  templateUrl: './ubicacion.component.html',
+  styleUrls: ['./ubicacion.component.scss'],
 })
-export class ContratoComponent {
+export class UbicacionComponent {
   idForm: string = '';
   errorMsg: string = '';
-  nombre: string = '';
-  fechaInicio: Date;
-  fechaFin: Date;
+  nombreForm: string = '';
+  direccionForm: string;
+  ciudadForm: string;
+  departamentoForm: string;
+  provinciaForm: string;
 
-  mantenedor: string = 'Contrato';
-  responseListName: string = 'contratos';
+  mantenedor: string = 'Ubicacion';
+  responseListName: string = 'ubicacionSedes';
   placeholder: string = 'Nombre ' + this.mantenedor;
   status: NbComponentStatus = 'success';
 
@@ -55,46 +58,48 @@ export class ContratoComponent {
         filter: false
       },
       nombre: {
-        title: 'Razon Social',
+        title: 'Nombre',
         type: 'string',
         filter: false
       },
-      fechaInicio: {
-        title: 'Fecha Inicio',
-        type: 'date',
-        filter: false,
-        class: 'colDate',
-        valuePrepareFunction: (cell: any, row: any) =>{
-          let parsedDate = new Date(cell);
-          new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-          return parsedDate.toLocaleDateString();
-        }
+      direccion: {
+        title: 'Direccion',
+        type: 'string',
+        filter: false
       },
-      fechaFin: {
-        title: 'Fecha Fin',
-        type: 'date',
-        filter: false,
-        class: 'colDate',
-        valuePrepareFunction: (cell: any, row: any) =>{
-          let parsedDate = new Date(cell);
-          new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-          return parsedDate.toLocaleDateString();
-        }
+      ciudad: {
+        title: 'Ciudad',
+        type: 'string',
+        filter: false
+      },
+      provincia: {
+        title: 'Provincia',
+        type: 'string',
+        filter: false
+      },
+      departamento: {
+        title: 'Departamento',
+        type: 'string',
+        filter: false
       }
+
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private contratoService : ContratoService,private httpClient: HttpClient,private dialogService: NbDialogService, private notificacionService: NbToastrService) {
+  constructor(private ubicacionService : UbicacionService,
+              private httpClient: HttpClient,
+              private dialogService: NbDialogService,
+              private notificacionService: NbToastrService) {
     this.loadInitialData();
   }
 
   private loadInitialData() {
-    this.contratoService.sendGetRequest().subscribe((data: any[]) => {
+    this.ubicacionService.sendGetRequest().subscribe((data: any[]) => {
       this.source = new ServerDataSource(this.httpClient,
         {
-          endPoint: ServiceConstants.GET_CONTRATO_PATH, //full-url-for-endpoint without any query strings
+          endPoint: ServiceConstants.GET_UBICACION_PATH, //full-url-for-endpoint without any query strings
           dataKey: this.responseListName,
           pagerPageKey: 'page',
           pagerLimitKey: 'size',
@@ -113,9 +118,11 @@ export class ContratoComponent {
 
   onSelectRow(event): void {
     this.idForm = event.data.id;
-    this.nombre = event.data.nombre;
-    this.fechaInicio = event.data.fechaInicio;
-    this.fechaFin = event.data.fechaFin;
+    this.nombreForm = event.data.nombre;
+    this.direccionForm = event.data.direccion;
+    this.ciudadForm = event.data.ciudad;
+    this.provinciaForm = event.data.provincia;
+    this.departamentoForm = event.data.departamento;
   }
 
   onCreate(event): void {
@@ -131,27 +138,21 @@ export class ContratoComponent {
   }
 
   shouldDisableSaveButton():boolean{
-    return this.nombre === '' || this.fechaInicio === null || this.fechaFin === null ;
+    return this.nombreForm === '' || this.direccionForm === null || this.provinciaForm === null ;
   }
 
   saveButton(dialog: TemplateRef<any>){
 
-    if (this.fechaInicio && this.fechaFin && this.fechaInicio > this.fechaFin) {
-      this.errorMsg = 'Fecha inicio no puede ser mayor a la fecha fin';
-      this.dialogService.open(dialog);
-      return;
-    }
-
     if(this.idForm === ''){
-      this.contratoService.save(this.nombre,this.fechaInicio,this.fechaFin).subscribe((data: any[]) => {
-        this.contratoService.sendGetRequest().subscribe((data: any[]) => {
+      this.ubicacionService.save(this.nombreForm,this.direccionForm,this.ciudadForm,this.provinciaForm,this.departamentoForm).subscribe((data: any[]) => {
+        this.ubicacionService.sendGetRequest().subscribe((data: any[]) => {
           this.mostrarNotificacionGrabado()
           this.source.load(data[this.responseListName]);
         })
       },this.manejarErrorSave());
     } else {
-      this.contratoService.update(this.idForm,this.nombre,this.fechaInicio,this.fechaFin).subscribe((data: any[]) => {
-        this.contratoService.sendGetRequest().subscribe((data: any[]) => {
+      this.ubicacionService.update(this.idForm,this.nombreForm,this.direccionForm,this.ciudadForm,this.provinciaForm,this.departamentoForm).subscribe((data: any[]) => {
+        this.ubicacionService.sendGetRequest().subscribe((data: any[]) => {
           this.mostrarNotificacionGrabado()
           this.source.load(data[this.responseListName]);
         })
@@ -168,15 +169,17 @@ export class ContratoComponent {
 
   cleanForm(){
     this.idForm = '';
-    this.fechaInicio = null;
-    this.fechaFin = null;
-    this.nombre = '';
+    this.nombreForm = '';
+    this.direccionForm = '';
+    this.ciudadForm = '';
+    this.provinciaForm = '';
+    this.departamentoForm = '';
   }
 
   private mostrarNotificacionGrabado() {
-    this.notificacionService.show(
-      '',
-      this.idForm == '' ? ServiceConstants.GET_SAVE_NOTIFICATION_MESSAGE : ServiceConstants.GET_UPDATE_NOTIFICATION_MESSAGE,
-      ServiceConstants.SAVE_TOAST_CONFIG);
+      this.notificacionService.show(
+        '',
+        this.idForm == '' ? ServiceConstants.GET_SAVE_NOTIFICATION_MESSAGE : ServiceConstants.GET_UPDATE_NOTIFICATION_MESSAGE,
+        ServiceConstants.SAVE_TOAST_CONFIG);
   }
 }

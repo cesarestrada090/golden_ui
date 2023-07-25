@@ -57,6 +57,10 @@ export class ServiceConstants {
     return this.GET_API_PATH + '/contrato';
   }
 
+  public static get GET_UBICACION_PATH() : string {
+    return this.GET_API_PATH + '/ubicacionSede';
+  }
+
   public static get GET_CLIENTE_PATH() : string {
     return this.GET_API_PATH + '/cliente';
   }
@@ -71,6 +75,9 @@ export class ServiceConstants {
 
   public static get GET_SAVE_NOTIFICATION_MESSAGE() : string {
     return 'Grabado Correctamente';
+  }
+  public static get GET_UPDATE_NOTIFICATION_MESSAGE() : string {
+    return 'Actualizado Correctamente';
   }
 
   public static get SAVE_TOAST_CONFIG()  {

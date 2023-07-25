@@ -54,10 +54,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },{
         title: 'Contrato',
         link: '/pages/configuracion/contrato',
-      }
-      ,{
+      },{
         title: 'Clientes',
         link: '/pages/configuracion/cliente',
+      },{
+        title: 'Ubicación',
+        link: '/pages/configuracion/ubicacion',
       }
     ],
   }

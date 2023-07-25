@@ -5,6 +5,7 @@ import { MiscellaneousComponent } from './miscellaneous.component';
 import {AreaComponent} from "./area/area.component";
 import {ContratoComponent} from "./contrato/contrato.component";
 import {ClienteComponent} from "./cliente/cliente.component";
+import {UbicacionComponent} from "./ubicacion/ubicacion.component";
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
       {
         path: 'cliente',
         component: ClienteComponent
+      },
+      {
+        path: 'ubicacion',
+        component: UbicacionComponent
       }
     ],
   },
