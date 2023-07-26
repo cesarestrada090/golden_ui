@@ -11,7 +11,7 @@ import {ContratoService} from "../../../services/Contrato/ContratoService";
 import {NbToastrService} from "@nebular/theme";
 
 @Component({
-  selector: 'cliente-table',
+  selector: 'suministro-table',
   templateUrl: './cliente.component.html',
   styleUrls: ['./cliente.component.scss'],
 })

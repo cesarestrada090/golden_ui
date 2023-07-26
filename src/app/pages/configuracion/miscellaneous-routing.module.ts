@@ -24,7 +24,7 @@ const routes: Routes = [
         component: ContratoComponent
       },
       {
-        path: 'cliente',
+        path: 'suministro',
         component: ClienteComponent
       },
       {

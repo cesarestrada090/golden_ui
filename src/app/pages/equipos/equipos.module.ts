@@ -17,7 +17,7 @@ import {TablesRoutingModule} from "../general/tables-routing.module";
 import {Ng2SmartTableModule} from "ng2-smart-table";
 import {ContratoService} from "../../services/Contrato/ContratoService";
 import {ClienteService} from "../../services/Cliente/ClienteService";
-import {SuministroComponent} from "./cliente/suministro.component";
+import {SuministroComponent} from "./suministro/suministro.component";
 import {UbicacionService} from "../../services/Ubicacion/UbicacionService";
 import {SedeService} from "../../services/Sede/SedeService";
 import {EstadoSedeService} from "../../services/EstadoSede/EstadoSedeService";
