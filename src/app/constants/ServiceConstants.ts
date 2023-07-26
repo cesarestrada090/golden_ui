@@ -32,6 +32,10 @@ export class ServiceConstants {
   public static get GET_ESTADO_PROVEEDOR_PATH() : string {
     return this.GET_API_PATH + '/estadoProveedorServicio';
   }
+
+  public static get GET_OPERADOR_PATH() : string {
+    return this.GET_API_PATH + '/operador';
+  }
   public static get GET_ESTADO_SEDE_PATH() : string {
     return this.GET_API_PATH + '/estadoSede';
   }
@@ -72,7 +76,9 @@ export class ServiceConstants {
   public static get GET_CLIENTE_PATH() : string {
     return this.GET_API_PATH + '/cliente';
   }
-
+  public static get GET_SUMINISTRO_PATH() : string {
+    return this.GET_API_PATH + '/suministro';
+  }
   public static get GET_DELETE_CONFIRM_MESSAGE() : string {
     return '¿Confirma que desea eliminar este registro?';
   }

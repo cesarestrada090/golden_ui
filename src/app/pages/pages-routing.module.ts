@@ -54,6 +54,11 @@ const routes: Routes = [{
         .then(m => m.MiscellaneousModule),
     },
     {
+      path: 'equipos',
+      loadChildren: () => import('./equipos/equipos.module')
+        .then(m => m.EquiposModule),
+    },
+    {
       path: '',
       redirectTo: 'general',
       pathMatch: 'full',

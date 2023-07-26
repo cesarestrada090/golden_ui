@@ -46,7 +46,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Configuración',
-    icon: 'shuffle-2-outline',
+    icon: 'settings-2-outline',
     children: [
       {
         title: 'Área',
@@ -66,6 +66,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },{
         title: 'Proveedor',
         link: '/pages/configuracion/proveedor',
+      },{
+        title: 'Operador',
+        link: '/pages/configuracion/operador',
+      }
+    ],
+  },{
+    title: 'Equipos',
+    icon: 'printer-outline',
+    children: [
+      {
+        title: 'Suministro',
+        link: '/pages/equipos/suministro',
       }
     ],
   }

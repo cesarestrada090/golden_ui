@@ -8,6 +8,7 @@ import {ClienteComponent} from "./cliente/cliente.component";
 import {UbicacionComponent} from "./ubicacion/ubicacion.component";
 import {SedeComponent} from "./sede/sede.component";
 import {ProveedorComponent} from "./proveedor/proveedor.component";
+import {OperadorComponent} from "./operador/operador.component";
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
       {
         path: 'proveedor',
         component: ProveedorComponent
+      },
+      {
+        path: 'operador',
+        component: OperadorComponent
       }
     ],
   },

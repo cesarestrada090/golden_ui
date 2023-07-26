@@ -1,0 +1,63 @@
+<nb-card>
+  <nb-card-header>
+    {{mantenedor}}
+  </nb-card-header>
+  <nb-card-body>
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header>{{getOperacion()}} {{mantenedor}}</nb-card-header>
+        <nb-card-body>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="idForm" nbInput disabled fullWidth placeholder="id">
+          </div>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="capacidad" nbInput fullWidth placeholder='Ingrese Capacidad Suministro'>
+          </div>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="descripcion" nbInput fullWidth placeholder="Ingrese Descripción Suministro">
+          </div>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="modelo" nbInput fullWidth placeholder="Ingrese Modelo Suministro">
+          </div>
+          <div class="full-name-inputs">
+            <nb-select placeholder="Estado Suministro" *ngIf="estadoSuministroCbo" fullWidth (selectedChange)="changeEstadoSuministro($event)" selected="{{estadoSuministroId}}" >
+              <nb-option *ngFor="let option of estadoSuministroCbo" value="{{ option.id }}">
+                {{ option.estado }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="full-name-inputs">
+            <nb-select placeholder="Tipo Suministro" *ngIf="tipoSuministroCbo" fullWidth (selectedChange)="changeTipoSuministro($event)" selected="{{tipoSuministroId}}" >
+              <nb-option *ngFor="let option of tipoSuministroCbo" value="{{ option.id }}">
+                {{ option.nombre }} - {{ option.color }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="buttons-row">
+            <button (click)="saveButton()"  [disabled]="shouldDisableSaveButton()" nbButton [status]="'primary'">
+              {{getOperacion()}}
+            </button>
+            <button (click)="cleanForm()" nbButton [status]="'warning'">
+              Limpiar
+            </button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <ng2-smart-table  (userRowSelect)="onSelectRow($event)" [settings]="settings" [source]="source"  (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Error</nb-card-header>
+    <nb-card-body><br>{{errorMsg}}<br></nb-card-body>
+    <nb-card-footer>
+      <button nbButton (click)="ref.close()">Ok</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
