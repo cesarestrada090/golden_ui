@@ -1,33 +1,31 @@
 import { Component } from '@angular/core';
 import {LocalDataSource, ServerDataSource} from 'ng2-smart-table';
-
-import { SmartTableData } from '../../../@core/data/smart-table';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ServiceConstants} from "../../../constants/ServiceConstants";
-import {EstadoCasoTecnicoService} from "../../../services/EstadoCasoTecnico/EstadoCasoTecnicoService";
-import {AreaService} from "../../../services/Area/AreaService";
 import {ClienteService} from "../../../services/Cliente/ClienteService";
 import {ContratoService} from "../../../services/Contrato/ContratoService";
 import {NbToastrService} from "@nebular/theme";
+import {ProveedorService} from "../../../services/Proveedor/ProveedorService";
+import {EstadoProveedorService} from "../../../services/EstadoProveedor/EstadoProveedorService";
 
 @Component({
-  selector: 'cliente-table',
-  templateUrl: './cliente.component.html',
-  styleUrls: ['./cliente.component.scss'],
+  selector: 'proveedor-table',
+  templateUrl: './proveedor.component.html',
+  styleUrls: ['./proveedor.component.scss'],
 })
-export class ClienteComponent {
+export class ProveedorComponent {
   idForm: string = '';
-  razonSocial: string = '';
+  nombre: string = '';
   ruc: string = '';
-  contratoCbo: any;
-  contratoId:number;
-  mantenedor: string = "Cliente";
-  responseListName: string = "clientes";
+  estadoServicioCbo: any;
+  estadoId:number;
+  mantenedor: string = "Proveedor";
+  responseListName: string = "proveedorServicios";
   errorMsg: string = '';
   placeholder: string = 'Nombre ' + this.mantenedor;
 
-  changeClient(event){
-    this.contratoId = event;
+  changeEstadoId(event){
+    this.estadoId = event;
   }
 
   settings = {
@@ -62,67 +60,39 @@ export class ClienteComponent {
         type: 'number',
         filter: false
       },
-      razonSocial: {
-        title: 'Razon Social',
+      nombre: {
+        title: 'Nombre Proveedor',
         type: 'string',
         filter: false
       },
-      ruc: {
-        title: 'ruc',
+      estado: {
+        title: 'Estado Proveedor',
         type: 'string',
         filter: false
-      },
-      nombreContrato: {
-        title: 'Nombre Contrato',
-        type: 'string',
-        filter: false
-      },
-      fechaInicio: {
-        title: 'Fecha Inicio',
-        type: 'date',
-        filter: false,
-        class: 'colDate',
-        valuePrepareFunction: (cell: any, row: any) =>{
-          let parsedDate = new Date(cell);
-          new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-          return parsedDate.toLocaleDateString();
-        }
-      },
-      fechaFin: {
-        title: 'Fecha Fin',
-        type: 'date',
-        filter: false,
-        class: 'colDate',
-        valuePrepareFunction: (cell: any, row: any) =>{
-          let parsedDate = new Date(cell);
-          new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-          return parsedDate.toLocaleDateString();
-        }
       }
-    },
+    }
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private clienteService: ClienteService,
-              private contratoService : ContratoService,
+  constructor(private proveedorService: ProveedorService,
+              private estadoProveedorService : EstadoProveedorService,
               private httpClient: HttpClient,
               private notificacionService: NbToastrService) {
     this.loadInitialData();
 
-    this.contratoService.sendGetRequest().subscribe((data: any[]) => {
-      this.contratoCbo = data['contratos'];
-      console.log(this.contratoCbo);
+    this.estadoProveedorService.sendGetRequest().subscribe((data: any[]) => {
+      this.estadoServicioCbo = data['estados'];
     });
   }
 
   private loadInitialData() {
 
 
-    this.clienteService.sendGetRequest().subscribe((data: any[]) => {
+    this.proveedorService.sendGetRequest().subscribe((data: any[]) => {
       this.source = new ServerDataSource(this.httpClient,
         {
-          endPoint: ServiceConstants.GET_CLIENTE_PATH, //full-url-for-endpoint without any query strings
+          endPoint: ServiceConstants.GET_PROVEEDOR_PATH, //full-url-for-endpoint without any query strings
           dataKey: this.responseListName,
           pagerPageKey: 'page',
           pagerLimitKey: 'size',
@@ -142,9 +112,8 @@ export class ClienteComponent {
 
   onSelectRow(event): void {
     this.idForm = event.data.id;
-    this.razonSocial = event.data.razonSocial;
-    this.ruc = event.data.ruc;
-    this.contratoId = event.data.contratoId;
+    this.nombre = event.data.nombre;
+    this.estadoId = event.data.estadoId;
   }
 
   onCreate(event): void {
@@ -160,20 +129,20 @@ export class ClienteComponent {
   }
 
   shouldDisableSaveButton():boolean{
-    return this.razonSocial === '' || this.ruc === '';
+    return this.nombre === '';
   }
 
   saveButton(){
     if(this.idForm === ''){
-      this.clienteService.save(this.razonSocial,this.ruc,this.contratoId).subscribe((data: any[]) => {
-        this.clienteService.sendGetRequest().subscribe((data: any[]) => {
+      this.proveedorService.save(this.nombre,this.estadoId).subscribe((data: any[]) => {
+        this.proveedorService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
           this.mostrarNotificacionGrabado()
         })
       },this.manejarErrorSave());
     } else {
-      this.clienteService.update(this.idForm, this.razonSocial,this.ruc, this.contratoId).subscribe((data: any[]) => {
-        this.clienteService.sendGetRequest().subscribe((data: any[]) => {
+      this.proveedorService.update(this.idForm, this.nombre,this.estadoId).subscribe((data: any[]) => {
+        this.proveedorService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
           this.mostrarNotificacionGrabado()
         })
@@ -190,8 +159,8 @@ export class ClienteComponent {
 
   cleanForm(){
     this.idForm = '';
-    this.razonSocial = '';
-    this.ruc = '';
+    this.nombre = '';
+    this.estadoId = null;
   }
 
   private mostrarNotificacionGrabado() {

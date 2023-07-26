@@ -63,6 +63,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },{
         title: 'Sedes',
         link: '/pages/configuracion/sede',
+      },{
+        title: 'Proveedor',
+        link: '/pages/configuracion/proveedor',
       }
     ],
   }

@@ -11,15 +11,13 @@
             <input type="text" [(ngModel)]="idForm" nbInput disabled fullWidth placeholder="id">
           </div>
           <div class="full-name-inputs">
-            <input type="text" [(ngModel)]="razonSocial" nbInput fullWidth placeholder='Ingrese Razon Social'>
+            <input type="text" [(ngModel)]="nombre" nbInput fullWidth placeholder='Ingrese Nombre Proveedor'>
           </div>
+
           <div class="full-name-inputs">
-            <input type="text" [(ngModel)]="ruc" nbInput fullWidth placeholder="Ingrese RUC">
-          </div>
-          <div class="full-name-inputs">
-            <nb-select placeholder="Contrato" *ngIf="contratoCbo" fullWidth (selectedChange)="changeClient($event)" selected="{{contratoId}}" >
-              <nb-option *ngFor="let option of contratoCbo" value="{{ option.id }}">
-                {{ option.nombre }}
+            <nb-select placeholder="Estado" *ngIf="estadoServicioCbo" fullWidth (selectedChange)="changeEstadoId($event)" selected="{{estadoId}}" >
+              <nb-option *ngFor="let option of estadoServicioCbo" value="{{ option.id }}">
+                {{ option.estado }}
               </nb-option>
             </nb-select>
           </div>
