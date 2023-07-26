@@ -27,6 +27,8 @@ import {OperadorService} from "../../services/Operador/OperadorService";
 import {TipoSuministroService} from "../../services/TipoSuministro/TipoSuministroService";
 import {EstadoSuministroService} from "../../services/EstadoSuministro/EstadoSuministroService";
 import {SuministroService} from "../../services/Suministro/SuministroService";
+import {HardwareService} from "../../services/Hardware/HardwareService";
+import {HardwareComponent} from "./hardware/hardware.component";
 
 @NgModule({
   imports: [
@@ -47,7 +49,8 @@ import {SuministroService} from "../../services/Suministro/SuministroService";
   ],
   declarations: [
     EquiposComponent,
-    SuministroComponent
+    SuministroComponent,
+    HardwareComponent
   ],
   providers: [
     AreaService,
@@ -61,7 +64,8 @@ import {SuministroService} from "../../services/Suministro/SuministroService";
     OperadorService,
     TipoSuministroService,
     EstadoSuministroService,
-    SuministroService
+    SuministroService,
+    HardwareService
   ]
 })
 export class EquiposModule { }

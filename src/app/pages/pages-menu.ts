@@ -78,6 +78,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Suministro',
         link: '/pages/equipos/suministro',
+      },
+      {
+        title: 'Hardware',
+        link: '/pages/equipos/hardware',
       }
     ],
   }

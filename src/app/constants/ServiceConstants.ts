@@ -4,8 +4,8 @@ export class ServiceConstants {
 
   //Server Constant
   public static get GET_API_HOST(){
-    return 'http://54.235.31.201';
-    //return 'http://localhost';
+    //return 'http://54.235.31.201';
+    return 'http://localhost';
   }
 
   public static get GET_PORT() : string {
@@ -79,6 +79,10 @@ export class ServiceConstants {
   }
   public static get GET_SUMINISTRO_PATH() : string {
     return this.GET_API_PATH + '/suministro';
+  }
+
+  public static get GET_HARDWARE_PATH() : string {
+    return this.GET_API_PATH + '/hardwareModelo';
   }
   public static get GET_DELETE_CONFIRM_MESSAGE() : string {
     return '¿Confirma que desea eliminar este registro?';
