@@ -84,11 +84,19 @@ export class ServiceConstants {
     return this.GET_API_PATH + '/modelo';
   }
 
+  public static get GET_MODELO_SUMINISTRO_PATH() : string {
+    return this.GET_API_PATH + '/modeloSuministro';
+  }
+
   public static get GET_HARDWARE_PATH() : string {
     return this.GET_API_PATH + '/hardwareModelo';
   }
   public static get GET_DELETE_CONFIRM_MESSAGE() : string {
     return '¿Confirma que desea eliminar este registro?';
+  }
+
+  public static get GET_UPDATE_STATUS_CONFIRM_MESSAGE() : string {
+    return '¿Confirma que cambiar el estado del registro?';
   }
 
   public static get GET_SAVE_CONFIRM_MESSAGE() : string {

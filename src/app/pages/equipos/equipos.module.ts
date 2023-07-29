@@ -31,7 +31,9 @@ import {HardwareService} from "../../services/Hardware/HardwareService";
 import {HardwareComponent} from "./hardware/hardware.component";
 import {TipoModeloService} from "../../services/TipoModelo/TipoModeloService";
 import {ModeloService} from "../../services/Modelo/ModeloService";
+import {ModeloSuministroService} from "../../services/ModeloSuministro/ModeloSuministroService";
 import {ModeloComponent} from "./modelo/modelo.component";
+import {ModeloSuministroComponent} from "./modelo-suministro/modelo.suministro.component";
 
 @NgModule({
   imports: [
@@ -54,7 +56,8 @@ import {ModeloComponent} from "./modelo/modelo.component";
     EquiposComponent,
     SuministroComponent,
     HardwareComponent,
-    ModeloComponent
+    ModeloComponent,
+    ModeloSuministroComponent
   ],
   providers: [
     AreaService,
@@ -71,7 +74,8 @@ import {ModeloComponent} from "./modelo/modelo.component";
     SuministroService,
     HardwareService,
     TipoModeloService,
-    ModeloService
+    ModeloService,
+    ModeloSuministroService
   ]
 })
 export class EquiposModule { }

@@ -5,6 +5,7 @@ import { EquiposComponent } from './equipos.component';
 import {SuministroComponent} from "./suministro/suministro.component";
 import {HardwareComponent} from "./hardware/hardware.component";
 import {ModeloComponent} from "./modelo/modelo.component";
+import {ModeloSuministroComponent} from "./modelo-suministro/modelo.suministro.component";
 
 const routes: Routes = [
   {
@@ -20,6 +21,9 @@ const routes: Routes = [
       },{
         path: 'modelo',
         component: ModeloComponent
+      },{
+        path: 'modeloSuministro',
+        component: ModeloSuministroComponent
       }
     ],
   },

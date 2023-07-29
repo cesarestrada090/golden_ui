@@ -23,7 +23,7 @@
             <input type="text" [(ngModel)]="volumenMaximo" nbInput fullWidth placeholder="Ingrese Volumen Máximo">
           </div>
           <div class="full-name-inputs">
-            <nb-select placeholder="Tipo Modelo" *ngIf="tipoModeloCbo" fullWidth (selectedChange)="changeTipoModelo($event)" selected="{{hardwareId}}" >
+            <nb-select placeholder="Tipo Modelo" *ngIf="tipoModeloCbo" fullWidth (selectedChange)="changeTipoModelo($event)" selected="{{tipoModeloId}}" >
               <nb-option *ngFor="let option of tipoModeloCbo" value="{{ option.id }}">
                 {{ option.nombre }}
               </nb-option>
@@ -31,7 +31,7 @@
           </div>
 
           <div class="full-name-inputs">
-            <nb-select placeholder="Modelo de Hardware" *ngIf="hardwareCbo" fullWidth (selectedChange)="changeHardware($event)" selected="{{tipoModeloId}}" >
+            <nb-select placeholder="Modelo de Hardware" *ngIf="hardwareCbo" fullWidth (selectedChange)="changeHardware($event)" selected="{{hardwareId}}" >
               <nb-option *ngFor="let option of hardwareCbo" value="{{ option.id }}">
                 {{ option.nombre }} - {{ option.procesador }} - disco: {{ option.disco }} - Conectividad: {{ option.conectividad }}
               </nb-option>
