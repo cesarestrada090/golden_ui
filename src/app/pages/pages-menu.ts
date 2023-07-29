@@ -82,6 +82,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Hardware',
         link: '/pages/equipos/hardware',
+      },
+      {
+        title: 'Modelo',
+        link: '/pages/equipos/modelo',
       }
     ],
   }

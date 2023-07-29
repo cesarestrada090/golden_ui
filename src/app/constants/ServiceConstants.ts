@@ -80,6 +80,9 @@ export class ServiceConstants {
   public static get GET_SUMINISTRO_PATH() : string {
     return this.GET_API_PATH + '/suministro';
   }
+  public static get GET_MODELO_PATH() : string {
+    return this.GET_API_PATH + '/modelo';
+  }
 
   public static get GET_HARDWARE_PATH() : string {
     return this.GET_API_PATH + '/hardwareModelo';

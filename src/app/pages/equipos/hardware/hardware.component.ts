@@ -105,12 +105,12 @@ export class HardwareComponent {
         filter: false
       },
       scanerResolucion: {
-        title: 'Resolución Escanner',
+        title: 'Resolución Scanner',
         type: 'string',
         filter: false
       },
       scanerVelocidad: {
-        title: 'Velocidad Escanner',
+        title: 'Velocidad Scanner',
         type: 'string',
         filter: false
       },

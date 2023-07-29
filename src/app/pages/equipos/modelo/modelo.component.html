@@ -1,0 +1,66 @@
+<nb-card>
+  <nb-card-header>
+    {{mantenedor}}
+  </nb-card-header>
+  <nb-card-body>
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header>{{getOperacion()}} {{mantenedor}}</nb-card-header>
+        <nb-card-body>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="idForm" nbInput disabled fullWidth placeholder="id">
+          </div>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="codigo" nbInput fullWidth placeholder='Ingrese Código'>
+          </div>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="nombreModelo" nbInput fullWidth placeholder="Ingrese Nombre Modelo">
+          </div>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="volumenMinimo" nbInput fullWidth placeholder="Ingrese Volumen Mínimo">
+          </div>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="volumenMaximo" nbInput fullWidth placeholder="Ingrese Volumen Máximo">
+          </div>
+          <div class="full-name-inputs">
+            <nb-select placeholder="Tipo Modelo" *ngIf="tipoModeloCbo" fullWidth (selectedChange)="changeTipoModelo($event)" selected="{{hardwareId}}" >
+              <nb-option *ngFor="let option of tipoModeloCbo" value="{{ option.id }}">
+                {{ option.nombre }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="full-name-inputs">
+            <nb-select placeholder="Modelo de Hardware" *ngIf="hardwareCbo" fullWidth (selectedChange)="changeHardware($event)" selected="{{tipoModeloId}}" >
+              <nb-option *ngFor="let option of hardwareCbo" value="{{ option.id }}">
+                {{ option.nombre }} - {{ option.procesador }} - disco: {{ option.disco }} - Conectividad: {{ option.conectividad }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="buttons-row">
+            <button (click)="saveButton()"  [disabled]="shouldDisableSaveButton()" nbButton [status]="'primary'">
+              {{getOperacion()}}
+            </button>
+            <button (click)="cleanForm()" nbButton [status]="'warning'">
+              Limpiar
+            </button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <ng2-smart-table  (userRowSelect)="onSelectRow($event)" [settings]="settings" [source]="source"  (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Error</nb-card-header>
+    <nb-card-body><br>{{errorMsg}}<br></nb-card-body>
+    <nb-card-footer>
+      <button nbButton (click)="ref.close()">Ok</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
