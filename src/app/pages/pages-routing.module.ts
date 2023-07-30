@@ -14,8 +14,8 @@ const routes: Routes = [{
     },
     {
       path: 'configuracion',
-      loadChildren: () => import('./configuracion/miscellaneous.module')
-        .then(m => m.MiscellaneousModule),
+      loadChildren: () => import('./configuracion/configuracion.module')
+        .then(m => m.ConfiguracionModule),
     },
     {
       path: 'equipos',

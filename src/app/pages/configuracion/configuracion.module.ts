@@ -9,8 +9,8 @@ import {
 } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
-import { MiscellaneousRoutingModule } from './miscellaneous-routing.module';
-import { MiscellaneousComponent } from './miscellaneous.component';
+import { ConfiguracionRoutingModule } from './configuracion-routing.module';
+import { ConfiguracionComponent } from './configuracion.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {AreaComponent} from "./area/area.component";
 import {AreaService} from "../../services/Area/AreaService";
@@ -37,7 +37,7 @@ import {OperadorService} from "../../services/Operador/OperadorService";
     ThemeModule,
     NbCardModule,
     NbButtonModule,
-    MiscellaneousRoutingModule,
+    ConfiguracionRoutingModule,
     NbTreeGridModule,
     NbIconModule,
     NbInputModule,
@@ -50,7 +50,7 @@ import {OperadorService} from "../../services/Operador/OperadorService";
     NbSelectModule,
   ],
   declarations: [
-    MiscellaneousComponent,
+    ConfiguracionComponent,
     NotFoundComponent,
     AreaComponent,
     ContratoComponent,
@@ -72,4 +72,4 @@ import {OperadorService} from "../../services/Operador/OperadorService";
     OperadorService
   ]
 })
-export class MiscellaneousModule { }
+export class ConfiguracionModule { }

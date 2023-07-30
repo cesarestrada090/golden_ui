@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MiscellaneousComponent } from './miscellaneous.component';
+import { ConfiguracionComponent } from './configuracion.component';
 import {AreaComponent} from "./area/area.component";
 import {ContratoComponent} from "./contrato/contrato.component";
 import {ClienteComponent} from "./cliente/cliente.component";
@@ -13,7 +13,7 @@ import {OperadorComponent} from "./operador/operador.component";
 const routes: Routes = [
   {
     path: '',
-    component: MiscellaneousComponent,
+    component: ConfiguracionComponent,
     children: [
       {
         path: 'area',
@@ -51,5 +51,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class MiscellaneousRoutingModule {
+export class ConfiguracionRoutingModule {
 }
