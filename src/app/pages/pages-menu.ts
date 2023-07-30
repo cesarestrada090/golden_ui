@@ -92,5 +92,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/equipos/modeloSuministro',
       }
     ],
+  },{
+    title: 'Casos Técnicos',
+    icon: 'alert-triangle-outline',
+    children: [
+      {
+        title: 'Técnicos',
+        link: '/pages/casos/tecnico',
+      }
+    ],
   }
 ];

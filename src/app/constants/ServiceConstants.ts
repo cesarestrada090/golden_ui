@@ -73,6 +73,9 @@ export class ServiceConstants {
   public static get GET_PROVEEDOR_PATH() : string {
     return this.GET_API_PATH + '/proveedorServicio';
   }
+  public static get GET_TECNICO_PATH() : string {
+    return this.GET_API_PATH + '/tecnico';
+  }
 
   public static get GET_CLIENTE_PATH() : string {
     return this.GET_API_PATH + '/suministro';

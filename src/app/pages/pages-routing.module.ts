@@ -23,6 +23,11 @@ const routes: Routes = [{
         .then(m => m.EquiposModule),
     },
     {
+      path: 'casos',
+      loadChildren: () => import('./casos/casos.module')
+        .then(m => m.CasosModule),
+    },
+    {
       path: '',
       redirectTo: 'general',
       pathMatch: 'full',
