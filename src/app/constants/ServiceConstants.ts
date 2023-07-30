@@ -78,10 +78,13 @@ export class ServiceConstants {
   }
 
   public static get GET_CLIENTE_PATH() : string {
-    return this.GET_API_PATH + '/suministro';
+    return this.GET_API_PATH + '/cliente';
   }
   public static get GET_SUMINISTRO_PATH() : string {
     return this.GET_API_PATH + '/suministro';
+  }
+  public static get GET_EQUIPO_PATH() : string {
+    return this.GET_API_PATH + '/equipo';
   }
   public static get GET_MODELO_PATH() : string {
     return this.GET_API_PATH + '/modelo';

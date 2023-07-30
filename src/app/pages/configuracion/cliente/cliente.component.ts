@@ -112,13 +112,10 @@ export class ClienteComponent {
 
     this.contratoService.sendGetRequest().subscribe((data: any[]) => {
       this.contratoCbo = data['contratos'];
-      console.log(this.contratoCbo);
     });
   }
 
   private loadInitialData() {
-
-
     this.clienteService.sendGetRequest().subscribe((data: any[]) => {
       this.source = new ServerDataSource(this.httpClient,
         {
