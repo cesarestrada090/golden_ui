@@ -52,6 +52,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Área',
         link: '/pages/configuracion/area',
       },{
+        title: 'Sedes',
+        link: '/pages/configuracion/sede',
+      },{
+        title: 'Areas y Sedes',
+        link: '/pages/configuracion/areaSede',
+      },{
         title: 'Contrato',
         link: '/pages/configuracion/contrato',
       },{
@@ -60,9 +66,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },{
         title: 'Ubicación',
         link: '/pages/configuracion/ubicacion',
-      },{
-        title: 'Sedes',
-        link: '/pages/configuracion/sede',
       },{
         title: 'Proveedor',
         link: '/pages/configuracion/proveedor',

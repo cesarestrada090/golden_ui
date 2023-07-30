@@ -31,6 +31,8 @@ import {EstadoProveedorService} from "../../services/EstadoProveedor/EstadoProve
 import {ProveedorComponent} from "./proveedor/proveedor.component";
 import {OperadorComponent} from "./operador/operador.component";
 import {OperadorService} from "../../services/Operador/OperadorService";
+import {AreaSedeComponent} from "./area-sede/area.sede.component";
+import {AreaSedeService} from "../../services/AreaSede/AreaSedeService";
 
 @NgModule({
   imports: [
@@ -58,7 +60,8 @@ import {OperadorService} from "../../services/Operador/OperadorService";
     UbicacionComponent,
     SedeComponent,
     ProveedorComponent,
-    OperadorComponent
+    OperadorComponent,
+    AreaSedeComponent
   ],
   providers: [
     AreaService,
@@ -69,7 +72,9 @@ import {OperadorService} from "../../services/Operador/OperadorService";
     EstadoSedeService,
     ProveedorService,
     EstadoProveedorService,
-    OperadorService
+    OperadorService,
+    AreaService,
+    AreaSedeService
   ]
 })
 export class ConfiguracionModule { }

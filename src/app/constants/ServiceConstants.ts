@@ -94,6 +94,10 @@ export class ServiceConstants {
     return this.GET_API_PATH + '/modeloSuministro';
   }
 
+  public static get GET_AREA_SEDE_PATH() : string {
+    return this.GET_API_PATH + '/areaHasSede';
+  }
+
   public static get GET_HARDWARE_PATH() : string {
     return this.GET_API_PATH + '/hardwareModelo';
   }

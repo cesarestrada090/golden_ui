@@ -9,6 +9,7 @@ import {UbicacionComponent} from "./ubicacion/ubicacion.component";
 import {SedeComponent} from "./sede/sede.component";
 import {ProveedorComponent} from "./proveedor/proveedor.component";
 import {OperadorComponent} from "./operador/operador.component";
+import {AreaSedeComponent} from "./area-sede/area.sede.component";
 
 const routes: Routes = [
   {
@@ -18,6 +19,14 @@ const routes: Routes = [
       {
         path: 'area',
         component: AreaComponent
+      },
+      {
+        path: 'sede',
+        component: SedeComponent
+      },
+      {
+        path: 'areaSede',
+        component: AreaSedeComponent
       },
       {
         path: 'contrato',
@@ -30,10 +39,6 @@ const routes: Routes = [
       {
         path: 'ubicacion',
         component: UbicacionComponent
-      },
-      {
-        path: 'sede',
-        component: SedeComponent
       },
       {
         path: 'proveedor',

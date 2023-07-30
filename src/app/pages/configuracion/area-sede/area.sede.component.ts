@@ -3,37 +3,37 @@ import {LocalDataSource, ServerDataSource} from 'ng2-smart-table';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ServiceConstants} from "../../../constants/ServiceConstants";
 import {NbToastrService} from "@nebular/theme";
-import {ModeloService} from "../../../services/Modelo/ModeloService";
-import {ModeloSuministroService} from "../../../services/ModeloSuministro/ModeloSuministroService";
-import {SuministroService} from "../../../services/Suministro/SuministroService";
+import {AreaSedeService} from "../../../services/AreaSede/AreaSedeService";
+import {AreaService} from "../../../services/Area/AreaService";
+import {SedeService} from "../../../services/Sede/SedeService";
 
 @Component({
-  selector: 'modelo-suministro-table',
-  templateUrl: './modelo.suministro.component.html',
-  styleUrls: ['./modelo.suministro.component.scss'],
+  selector: 'area-sede-table',
+  templateUrl: './area.sede.component.html',
+  styleUrls: ['./area.sede.component.scss'],
 })
-export class ModeloSuministroComponent {
+export class AreaSedeComponent {
   idForm: string = '';
 
   //cbo
-  modeloCbo: any[];
-  suministroCbo: any[];
+  sedeCbo: any[];
+  areaCbo: any[];
 
   //cbo ids
-  modeloId:number;
-  suministroId:number;
+  sedeId: number;
+  areaId: number;
 
-  mantenedor: string = "Modelos y Suministros";
+  mantenedor: string = "Áreas y Sedes";
   responseListName: string = "modeloSuministros";
   errorMsg: string = '';
   placeholder: string = 'Nombre ' + this.mantenedor;
 
-  changeSuministroId(event){
-    this.suministroId = event;
+  changeAreaId(event){
+    this.areaId = event;
   }
 
-  changeModelo(event){
-    this.modeloId = event;
+  changeSedeId(event){
+    this.sedeId = event;
   }
 
   settings = {
@@ -63,17 +63,17 @@ export class ModeloSuministroComponent {
       position: 'left',
     },
     columns: {
-      codigoModelo: {
-        title: 'Nombre Modelo',
+      nombreArea: {
+        title: 'Nombre Área',
         type: 'string',
         filter: false
       },
-      codigoSuministro: {
-        title: 'Nombre Suministro',
+      nombreSede: {
+        title: 'Nombre Sede',
         type: 'string',
         filter: false
       },
-      estado: {
+      activo: {
         title: 'Estado Relación',
         type: 'string',
         filter: false,
@@ -89,28 +89,28 @@ export class ModeloSuministroComponent {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private modeloSuministroService: ModeloSuministroService,
-              private modeloService : ModeloService,
-              private suministroService : SuministroService,
+  constructor(private areaSedeService: AreaSedeService,
+              private areaService : AreaService,
+              private sedeService : SedeService,
               private httpClient: HttpClient,
               private notificacionService: NbToastrService) {
     this.loadInitialData();
 
-    this.suministroService.sendGetRequest().subscribe((data: any[]) => {
-      this.suministroCbo = data['suministros'];
+    this.sedeService.sendGetRequest().subscribe((data: any[]) => {
+      this.sedeCbo = data['sedes'];
     });
-    this.modeloService.sendGetRequest().subscribe((data: any[]) => {
-      this.modeloCbo = data['modelos'];
+    this.areaService.sendGetRequest().subscribe((data: any[]) => {
+      this.areaCbo = data['areas'];
     });
   }
 
   private loadInitialData() {
 
 
-    this.modeloSuministroService.sendGetRequest().subscribe((data: any[]) => {
+    this.areaSedeService.sendGetRequest().subscribe((data: any[]) => {
       this.source = new ServerDataSource(this.httpClient,
         {
-          endPoint: ServiceConstants.GET_MODELO_SUMINISTRO_PATH,
+          endPoint: ServiceConstants.GET_AREA_SEDE_PATH,
           dataKey: this.responseListName,
           pagerPageKey: 'page',
           pagerLimitKey: 'size',
@@ -122,8 +122,8 @@ export class ModeloSuministroComponent {
 
   onDeleteConfirm(event): void {
     if (window.confirm(ServiceConstants.GET_UPDATE_STATUS_CONFIRM_MESSAGE)) {
-        this.modeloSuministroService.update(event.data.modeloId,event.data.suministroId).subscribe((data: any[]) => {
-          this.modeloSuministroService.sendGetRequest().subscribe((data: any[]) => {
+        this.areaSedeService.update(event.data.areaId,event.data.sedeId).subscribe((data: any[]) => {
+          this.areaSedeService.sendGetRequest().subscribe((data: any[]) => {
             this.source.load(data[this.responseListName]);
             this.mostrarNotificacionGrabado()
           })
@@ -135,8 +135,8 @@ export class ModeloSuministroComponent {
 
   onSelectRow(event): void {
     this.idForm = event.data.id;
-    this.modeloId = event.data.modeloId;
-    this.suministroId = event.data.suministroId;
+    this.sedeId = event.data.sedeId;
+    this.areaId = event.data.areaId;
   }
 
   onCreate(event): void {
@@ -152,12 +152,12 @@ export class ModeloSuministroComponent {
   }
 
   shouldDisableSaveButton():boolean{
-    return !this.modeloId || !this.suministroId;
+    return !this.sedeId || !this.areaId;
   }
 
   saveButton(){
-    this.modeloSuministroService.save(this.modeloId,this.suministroId).subscribe((data: any[]) => {
-      this.modeloSuministroService.sendGetRequest().subscribe((data: any[]) => {
+    this.areaSedeService.save(this.areaId,this.sedeId).subscribe((data: any[]) => {
+      this.areaSedeService.sendGetRequest().subscribe((data: any[]) => {
         this.source.load(data[this.responseListName]);
         this.mostrarNotificacionGrabado()
       })
@@ -173,8 +173,8 @@ export class ModeloSuministroComponent {
 
   cleanForm(){
     this.idForm = '';
-    this.modeloId = null;
-    this.suministroId = null;
+    this.sedeId = null;
+    this.areaId = null;
   }
 
   private mostrarNotificacionGrabado() {
