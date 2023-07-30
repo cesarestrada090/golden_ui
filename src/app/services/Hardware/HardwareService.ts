@@ -20,7 +20,8 @@ export class HardwareService {
   }
 
   public save
-  (     bandejas : string,
+  (     nombre : string,
+        bandejas : string,
         conectividad : string,
         procesador : string,
         disco : string,
@@ -34,6 +35,7 @@ export class HardwareService {
         copiaVelocidad : string ){
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post(ServiceConstants.GET_HARDWARE_PATH,{
+      'nombre': nombre,
       'bandejas': bandejas,
       'conectividad': conectividad,
       'procesador': procesador,
@@ -50,6 +52,7 @@ export class HardwareService {
   }
 
   public update(id : string ,
+                nombre : string,
                 bandejas : string,
                 conectividad : string,
                 procesador : string,
@@ -67,6 +70,7 @@ export class HardwareService {
     return this.httpClient.put(ServiceConstants.GET_HARDWARE_PATH+'/'+id,
       {
         'id': id,
+        'nombre': nombre,
         'bandejas': bandejas,
         'conectividad': conectividad,
         'procesador': procesador,

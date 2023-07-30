@@ -12,6 +12,7 @@ import {HardwareService} from "../../../services/Hardware/HardwareService";
 })
 export class HardwareComponent {
   idForm: string = '';
+  nombre: string = '';
   bandejas: string = '';
   conectividad: string = '';
   procesador: string = '';
@@ -62,6 +63,11 @@ export class HardwareComponent {
       id: {
         title: 'ID',
         type: 'number',
+        filter: false
+      },
+      nombre: {
+        title: 'nombre',
+        type: 'string',
         filter: false
       },
       bandejas: {
@@ -159,6 +165,7 @@ export class HardwareComponent {
 
   onSelectRow(event): void {
     this.idForm = event.data.id;
+    this.nombre = event.data.nombre;
     this.bandejas = event.data.bandejas;
     this.conectividad = event.data.conectividad;
     this.procesador = event.data.procesador;
@@ -192,6 +199,7 @@ export class HardwareComponent {
   saveButton(){
     if(this.idForm === ''){
       this.hardwareService.save(
+        this.nombre,
         this.bandejas,
         this.conectividad,
         this.procesador,
@@ -212,6 +220,7 @@ export class HardwareComponent {
     } else {
       this.hardwareService.update(
         this.idForm,
+        this.nombre,
         this.bandejas,
         this.conectividad,
         this.procesador,
