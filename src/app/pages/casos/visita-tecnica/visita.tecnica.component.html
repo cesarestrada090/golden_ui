@@ -1,0 +1,76 @@
+<nb-card>
+  <nb-card-header>
+    {{mantenedor}}
+  </nb-card-header>
+  <nb-card-body>
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header>{{getOperacion()}} {{mantenedor}}</nb-card-header>
+        <nb-card-body>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="idForm" nbInput disabled fullWidth placeholder="id">
+          </div>
+
+
+          <div class="full-name-inputs">
+            <nb-select placeholder="Código del Caso Técnico" *ngIf="casoTecnicoCbo" fullWidth (selectedChange)="changeCasoTecnicoId($event)" selected="{{casoTecnicoId}}" >
+              <nb-option *ngFor="let option of casoTecnicoCbo" value="{{ option.id }}">
+                {{ option.codigo }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="full-name-inputs">
+            <nb-select placeholder="Estado del caso" *ngIf="estadoVisitaTecnicaCbo" fullWidth (selectedChange)="changeEstadoVisitaId($event)" selected="{{estadoVisitaId}}" >
+              <nb-option *ngFor="let option of estadoVisitaTecnicaCbo" value="{{ option.id }}">
+                {{ option.estado }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="full-name-inputs">
+            <input nbInput fullWidth
+                   [(ngModel)]="fechaCreacion"
+                   placeholder="Fecha Creación"
+                   [nbDatepicker]="fechaCreacionPicker">
+            <nb-datepicker #fechaCreacionPicker></nb-datepicker>
+          </div>
+
+          <div class="buttons-row">
+            <button (click)="saveButton()"  [disabled]="shouldDisableSaveButton()" nbButton [status]="'primary'">
+              {{getOperacion()}}
+            </button>
+            <button (click)="cleanForm()" nbButton [status]="'warning'">
+              Limpiar
+            </button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <ng2-smart-table class="order-table" (custom)="onViewVisitaTecnica($event)"   (userRowSelect)="onSelectRow($event)" [settings]="settings" [source]="source"  (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+
+    <br/><br/><br/><br/>
+    <nb-card *ngIf="selectedId">
+      <nb-card-header>
+        Detalle de La Visita técnica con Id:  {{selectedId}} <br> Código Caso Técnico: {{codigoCaso}}
+      </nb-card-header>
+      <nb-card-body>
+        <ng2-smart-table  *ngIf="selectedId" class="order-table" (custom)="onViewVisitaTecnica($event)"   (userRowSelect)="onSelectRow($event)" [settings]="detailSettings" [source]="detalleSource"  (deleteConfirm)="onDeleteConfirm($event)">
+        </ng2-smart-table>
+      </nb-card-body>
+    </nb-card>
+
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Error</nb-card-header>
+    <nb-card-body><br>{{errorMsg}}<br></nb-card-body>
+    <nb-card-footer>
+      <button nbButton (click)="ref.close()">Ok</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
