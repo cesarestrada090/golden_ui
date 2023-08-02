@@ -47,6 +47,10 @@ export class ServiceConstants {
   public static get GET_ESTADO_DETALLE_PATH() : string {
     return this.GET_API_PATH + '/estadoDetalleVisita';
   }
+
+  public static get GET_ESTADO_VISITA_PATH() : string {
+    return this.GET_API_PATH + '/estadoVisitaTecnica';
+  }
   public static get GET_TIPO_SUMINISTRO_PATH() : string {
     return this.GET_API_PATH + '/tipoSuministro';
   }

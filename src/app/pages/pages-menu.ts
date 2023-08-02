@@ -31,6 +31,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/general/estado-caso',
       },
       {
+        title: 'Estado Visita Técnica',
+        link: '/pages/general/estado-visita',
+      },
+      {
         title: 'Estado Proveedor Servicio',
         link: '/pages/general/estado-proveedor',
       },

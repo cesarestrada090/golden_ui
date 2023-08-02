@@ -12,6 +12,7 @@ import {EstadoProveedorComponent} from "./estado-proveedor/estado-proveedor.comp
 import {EstadoSedeComponent} from "./estado-sede/estado-sede.component";
 import {EstadoDetalleComponent} from "./estado-detalle/estado-detalle.component";
 import {EstadoSuministroComponent} from "./estado-suministro/estado-suministro.component";
+import {EstadoVisitaComponent} from "./estado-visita/estado-visita.component";
 
 const routes: Routes = [{
   path: '',
@@ -48,6 +49,10 @@ const routes: Routes = [{
     {
       path: 'estado-detalle',
       component: EstadoDetalleComponent
+    },
+    {
+      path: 'estado-visita',
+      component: EstadoVisitaComponent
     }
   ],
 }];
@@ -69,5 +74,6 @@ export const routedComponents = [
   EstadoSedeComponent,
   EstadoDetalleComponent,
   EstadoSuministroComponent,
+  EstadoVisitaComponent,
   TreeGridComponent
 ];

@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import {LocalDataSource, ServerDataSource} from 'ng2-smart-table';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient,} from "@angular/common/http";
 import {ServiceConstants} from "../../../constants/ServiceConstants";
 import {NbToastrService} from "@nebular/theme";
-import {TecnicoService} from "../../../services/TecnicoService/TecnicoService";
-import {ProveedorService} from "../../../services/Proveedor/ProveedorService";
 import {CasoService} from "../../../services/Caso/CasoService";
 import {EstadoCasoTecnicoService} from "../../../services/EstadoCasoTecnico/EstadoCasoTecnicoService";
 import {EquipoService} from "../../../services/Equipo/EquipoService";
