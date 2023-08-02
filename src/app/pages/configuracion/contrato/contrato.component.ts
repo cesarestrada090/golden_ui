@@ -67,7 +67,7 @@ export class ContratoComponent {
         valuePrepareFunction: (cell: any, row: any) =>{
           let parsedDate = new Date(cell);
           new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-          return parsedDate.toLocaleDateString();
+          return parsedDate.toLocaleDateString('ES-en', { weekday:"long", year:"numeric", month:"short", day:"numeric"});
         }
       },
       fechaFin: {
@@ -78,7 +78,7 @@ export class ContratoComponent {
         valuePrepareFunction: (cell: any, row: any) =>{
           let parsedDate = new Date(cell);
           new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-          return parsedDate.toLocaleDateString();
+          return parsedDate.toLocaleDateString('ES-en', { weekday:"long", year:"numeric", month:"short", day:"numeric"});
         }
       }
     },

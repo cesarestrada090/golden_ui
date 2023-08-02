@@ -1,0 +1,69 @@
+<nb-card>
+  <nb-card-header>
+    {{mantenedor}}
+  </nb-card-header>
+  <nb-card-body>
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header>{{getOperacion()}} {{mantenedor}}</nb-card-header>
+        <nb-card-body>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="idForm" nbInput disabled fullWidth placeholder="id">
+          </div>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="codigo" nbInput fullWidth placeholder='Ingrese Código del Caso'>
+          </div>
+          <div class="full-name-inputs">
+            <input type="text" [(ngModel)]="tipo" nbInput fullWidth placeholder="Ingrese Tipo de Caso">
+          </div>
+
+          <div class="full-name-inputs">
+            <input nbInput fullWidth
+                   [(ngModel)]="fechaCasoTecnico"
+                   placeholder="Fecha Caso Técnico"
+                   [nbDatepicker]="formDateFin">
+            <nb-datepicker #formDateFin></nb-datepicker>
+          </div>
+
+          <div class="full-name-inputs">
+            <nb-select placeholder="Equipo Afectado" *ngIf="equipoCbo" fullWidth (selectedChange)="changeEquipoId($event)" selected="{{equipoId}}" >
+              <nb-option *ngFor="let option of equipoCbo" value="{{ option.id }}">
+                {{ option.serie }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="full-name-inputs">
+            <nb-select placeholder="Estado del caso" *ngIf="estadoCasoCbo" fullWidth (selectedChange)="changeEstadoId($event)" selected="{{estadoCasoId}}" >
+              <nb-option *ngFor="let option of estadoCasoCbo" value="{{ option.id }}">
+                {{ option.nombre }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="buttons-row">
+            <button (click)="saveButton()"  [disabled]="shouldDisableSaveButton()" nbButton [status]="'primary'">
+              {{getOperacion()}}
+            </button>
+            <button (click)="cleanForm()" nbButton [status]="'warning'">
+              Limpiar
+            </button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <ng2-smart-table  (userRowSelect)="onSelectRow($event)" [settings]="settings" [source]="source"  (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Error</nb-card-header>
+    <nb-card-body><br>{{errorMsg}}<br></nb-card-body>
+    <nb-card-footer>
+      <button nbButton (click)="ref.close()">Ok</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

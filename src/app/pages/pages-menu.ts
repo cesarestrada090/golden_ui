@@ -106,6 +106,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Técnicos',
         link: '/pages/casos/tecnico',
+      },
+      {
+        title: 'Caso Tecnico',
+        link: '/pages/casos/caso',
       }
     ],
   }

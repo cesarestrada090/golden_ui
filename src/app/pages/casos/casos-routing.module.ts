@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CasosComponent } from './casos.component';
 import {TecnicoComponent} from "./tecnico/tecnico.component";
+import {CasoComponent} from "./caso/caso.component";
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
       {
         path: 'tecnico',
         component: TecnicoComponent
+      },
+      {
+        path: 'caso',
+        component: CasoComponent
       }
     ],
   },

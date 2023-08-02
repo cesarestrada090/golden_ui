@@ -1,33 +1,45 @@
 import { Component } from '@angular/core';
 import {LocalDataSource, ServerDataSource} from 'ng2-smart-table';
-
-import { SmartTableData } from '../../../@core/data/smart-table';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ServiceConstants} from "../../../constants/ServiceConstants";
-import {EstadoCasoTecnicoService} from "../../../services/EstadoCasoTecnico/EstadoCasoTecnicoService";
-import {AreaService} from "../../../services/Area/AreaService";
-import {ClienteService} from "../../../services/Cliente/ClienteService";
-import {ContratoService} from "../../../services/Contrato/ContratoService";
 import {NbToastrService} from "@nebular/theme";
+import {TecnicoService} from "../../../services/TecnicoService/TecnicoService";
+import {ProveedorService} from "../../../services/Proveedor/ProveedorService";
+import {CasoService} from "../../../services/Caso/CasoService";
+import {EstadoCasoTecnicoService} from "../../../services/EstadoCasoTecnico/EstadoCasoTecnicoService";
+import {EquipoService} from "../../../services/Equipo/EquipoService";
 
 @Component({
-  selector: 'suministro-table',
-  templateUrl: './cliente.component.html',
-  styleUrls: ['./cliente.component.scss'],
+  selector: 'caso-table',
+  templateUrl: './caso.component.html',
+  styleUrls: ['./caso.component.scss'],
 })
-export class ClienteComponent {
+export class CasoComponent {
   idForm: string = '';
-  razonSocial: string = '';
-  ruc: string = '';
-  contratoCbo: any;
-  contratoId:number;
-  mantenedor: string = "Cliente";
-  responseListName: string = "clientes";
+  codigo: string = '';
+  tipo: string = '';
+
+  fechaCasoTecnico: Date;
+
+  //cbo
+  equipoCbo: any;
+  estadoCasoCbo: any;
+
+  //cbo ids
+  equipoId:number;
+  estadoCasoId:number;
+
+  mantenedor: string = "Casos";
+  responseListName: string = "casoTecnicos";
   errorMsg: string = '';
   placeholder: string = 'Nombre ' + this.mantenedor;
 
-  changeClient(event){
-    this.contratoId = event;
+  changeEquipoId(event){
+    this.equipoId = event;
+  }
+
+  changeEstadoId(event){
+    this.estadoCasoId = event;
   }
 
   settings = {
@@ -62,64 +74,69 @@ export class ClienteComponent {
         type: 'number',
         filter: false
       },
-      razonSocial: {
-        title: 'Razon Social',
+      codigo: {
+        title: 'Código',
         type: 'string',
         filter: false
       },
-      ruc: {
-        title: 'ruc',
+      tipo: {
+        title: 'Tipo',
         type: 'string',
         filter: false
       },
-      nombreContrato: {
-        title: 'Nombre Contrato',
-        type: 'string',
-        filter: false
-      },
-      fechaInicio: {
-        title: 'Fecha Inicio',
+      fecha: {
+        title: 'Fecha Caso Técnico',
         type: 'date',
         filter: false,
         class: 'colDate',
         valuePrepareFunction: (cell: any, row: any) =>{
           let parsedDate = new Date(cell);
-          new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
           return parsedDate.toLocaleDateString('ES-en', { weekday:"long", year:"numeric", month:"short", day:"numeric"});
         }
       },
-      fechaFin: {
-        title: 'Fecha Fin',
-        type: 'date',
-        filter: false,
-        class: 'colDate',
-        valuePrepareFunction: (cell: any, row: any) =>{
-          let parsedDate = new Date(cell);
-          new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})
-          return parsedDate.toLocaleDateString('ES-en', { weekday:"long", year:"numeric", month:"short", day:"numeric"});
-        }
+      nombreEstadoCasoTecnico: {
+        title: 'Estado del Caso',
+        type: 'string',
+        filter: false
+      },
+      serieEquipo: {
+        title: 'Serie Equipo',
+        type: 'string',
+        filter: false
+      },
+      clienteEquipo: {
+        title: 'Cliente Afectado',
+        type: 'string',
+        filter: false
       }
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private clienteService: ClienteService,
-              private contratoService : ContratoService,
+  constructor(private casoService: CasoService,
+              private estadoCasoTecnicoService : EstadoCasoTecnicoService,
+              private equipoService : EquipoService,
               private httpClient: HttpClient,
               private notificacionService: NbToastrService) {
     this.loadInitialData();
 
-    this.contratoService.sendGetRequest().subscribe((data: any[]) => {
-      this.contratoCbo = data['contratos'];
+    this.estadoCasoTecnicoService.sendGetRequest().subscribe((data: any[]) => {
+      this.estadoCasoCbo = data['estados'];
+    });
+
+    this.equipoService.sendGetRequest().subscribe((data: any[]) => {
+      this.equipoCbo = data['equipos'];
     });
   }
 
   private loadInitialData() {
-    this.clienteService.sendGetRequest().subscribe((data: any[]) => {
+
+
+    this.casoService.sendGetRequest().subscribe((data: any[]) => {
       this.source = new ServerDataSource(this.httpClient,
         {
-          endPoint: ServiceConstants.GET_CLIENTE_PATH, //full-url-for-endpoint without any query strings
+          endPoint: ServiceConstants.GET_CASO_PATH,
           dataKey: this.responseListName,
           pagerPageKey: 'page',
           pagerLimitKey: 'size',
@@ -139,9 +156,11 @@ export class ClienteComponent {
 
   onSelectRow(event): void {
     this.idForm = event.data.id;
-    this.razonSocial = event.data.razonSocial;
-    this.ruc = event.data.ruc;
-    this.contratoId = event.data.contratoId;
+    this.tipo = event.data.tipo;
+    this.codigo = event.data.codigo;
+    this.fechaCasoTecnico = event.data.fecha;
+    this.equipoId = event.data.equipoId;
+    this.estadoCasoId = event.data.estadoId;
   }
 
   onCreate(event): void {
@@ -157,20 +176,20 @@ export class ClienteComponent {
   }
 
   shouldDisableSaveButton():boolean{
-    return this.razonSocial === '' || this.ruc === '';
+    return this.tipo === '' || this.codigo === '' || !this.equipoId;
   }
 
   saveButton(){
     if(this.idForm === ''){
-      this.clienteService.save(this.razonSocial,this.ruc,this.contratoId).subscribe((data: any[]) => {
-        this.clienteService.sendGetRequest().subscribe((data: any[]) => {
+      this.casoService.save(this.codigo,this.tipo,this.fechaCasoTecnico,this.estadoCasoId,this.equipoId).subscribe((data: any[]) => {
+        this.casoService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
           this.mostrarNotificacionGrabado()
         })
       },this.manejarErrorSave());
     } else {
-      this.clienteService.update(this.idForm, this.razonSocial,this.ruc, this.contratoId).subscribe((data: any[]) => {
-        this.clienteService.sendGetRequest().subscribe((data: any[]) => {
+      this.casoService.update(this.idForm, this.codigo,this.tipo,this.fechaCasoTecnico,this.estadoCasoId,this.equipoId).subscribe((data: any[]) => {
+        this.casoService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
           this.mostrarNotificacionGrabado()
         })
@@ -187,8 +206,11 @@ export class ClienteComponent {
 
   cleanForm(){
     this.idForm = '';
-    this.razonSocial = '';
-    this.ruc = '';
+    this.tipo = '';
+    this.codigo = '';
+    this.equipoId = null;
+    this.estadoCasoId = null;
+    this.fechaCasoTecnico = null;
   }
 
   private mostrarNotificacionGrabado() {

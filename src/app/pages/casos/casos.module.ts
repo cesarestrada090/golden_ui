@@ -20,6 +20,10 @@ import {SuministroService} from "../../services/Suministro/SuministroService";
 import {TipoSuministroService} from "../../services/TipoSuministro/TipoSuministroService";
 import {EstadoSuministroService} from "../../services/EstadoSuministro/EstadoSuministroService";
 import {TecnicoService} from "../../services/TecnicoService/TecnicoService";
+import {CasoComponent} from "./caso/caso.component";
+import {EstadoCasoTecnicoService} from "../../services/EstadoCasoTecnico/EstadoCasoTecnicoService";
+import {CasoService} from "../../services/Caso/CasoService";
+import {EquipoService} from "../../services/Equipo/EquipoService";
 
 @NgModule({
   imports: [
@@ -40,13 +44,17 @@ import {TecnicoService} from "../../services/TecnicoService/TecnicoService";
   ],
   declarations: [
     CasosComponent,
-    TecnicoComponent
+    TecnicoComponent,
+    CasoComponent
   ],
   providers: [
     ProveedorService,
     SuministroService,
     TipoSuministroService,
     EstadoSuministroService,
+    EstadoCasoTecnicoService,
+    CasoService,
+    EquipoService,
     TecnicoService
   ]
 })

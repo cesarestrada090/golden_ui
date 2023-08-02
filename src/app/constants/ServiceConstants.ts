@@ -76,7 +76,9 @@ export class ServiceConstants {
   public static get GET_TECNICO_PATH() : string {
     return this.GET_API_PATH + '/tecnico';
   }
-
+  public static get GET_CASO_PATH() : string {
+    return this.GET_API_PATH + '/casoTecnico';
+  }
   public static get GET_CLIENTE_PATH() : string {
     return this.GET_API_PATH + '/cliente';
   }
