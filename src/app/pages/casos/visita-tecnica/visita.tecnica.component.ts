@@ -299,7 +299,6 @@ export class VisitaTecnicaComponent {
     this.tecnicoId = event.data.tecnicoId;
     this.estadoDetalleVisitaId = event.data.estadoId;
     this.operadorId = event.data.operadorId;
-    this.fechaCreacionDetalle = event.data.fecha
     this.comentario = event.data.comentario
     this.fechaCreacionDetalle = event.data.fecha;
   }
@@ -330,14 +329,14 @@ export class VisitaTecnicaComponent {
 
   saveButton(){
     if(this.idForm === ''){
-      this.visitaTecnicaService.save(this.casoTecnicoId,this.estadoVisitaId,this.fechaCreacion).subscribe((data: any[]) => {
+      this.visitaTecnicaService.save(this.casoTecnicoId,this.estadoVisitaId,this.fechaCreacionDetalle).subscribe((data: any[]) => {
         this.visitaTecnicaService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
           this.mostrarNotificacionGrabado()
         })
       },this.manejarErrorSave());
     } else {
-      this.visitaTecnicaService.update(this.idForm,this.casoTecnicoId,this.estadoVisitaId,this.fechaCreacion).subscribe((data: any[]) => {
+      this.visitaTecnicaService.update(this.idForm,this.casoTecnicoId,this.estadoVisitaId,this.fechaCreacionDetalle).subscribe((data: any[]) => {
         this.visitaTecnicaService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
           this.mostrarNotificacionGrabado()
