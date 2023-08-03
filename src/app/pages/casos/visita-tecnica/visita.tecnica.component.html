@@ -57,7 +57,65 @@
         Detalle de La Visita técnica con Id:  {{selectedId}} <br> Código Caso Técnico: {{codigoCaso}}
       </nb-card-header>
       <nb-card-body>
-        <ng2-smart-table  *ngIf="selectedId" class="order-table" (custom)="onViewVisitaTecnica($event)"   (userRowSelect)="onSelectRow($event)" [settings]="detailSettings" [source]="detalleSource"  (deleteConfirm)="onDeleteConfirm($event)">
+
+        <div class="col-lg-12" *ngIf="selectedDetailId">
+          <nb-card>
+            <nb-card-header>{{getOperacionDetalle()}} </nb-card-header>
+            <nb-card-body>
+              <div class="full-name-inputs">
+                <input type="text" [(ngModel)]="idDetalleForm" nbInput disabled fullWidth placeholder="id">
+              </div>
+
+
+              <div class="full-name-inputs">
+                <nb-select placeholder="Técnico" *ngIf="tecnicoCbo" fullWidth (selectedChange)="changeTecnicoId($event)" selected="{{tecnicoId}}" >
+                  <nb-option *ngFor="let option of tecnicoCbo" value="{{ option.id }}">
+                    {{ option.nombre }}
+                  </nb-option>
+                </nb-select>
+              </div>
+
+              <div class="full-name-inputs">
+                <nb-select placeholder="Operador" *ngIf="operadorCbo" fullWidth (selectedChange)="changeOperadorId($event)" selected="{{operadorId}}" >
+                  <nb-option *ngFor="let option of operadorCbo" value="{{ option.id }}">
+                    {{ option.nombre }}
+                  </nb-option>
+                </nb-select>
+              </div>
+
+              <div class="full-name-inputs">
+                <nb-select placeholder="Estado Atención" *ngIf="estadoDetalleVisitaCbo" fullWidth (selectedChange)="changeEstadoDetalleVisita($event)" selected="{{estadoDetalleVisitaId}}" >
+                  <nb-option *ngFor="let option of estadoDetalleVisitaCbo" value="{{ option.id }}">
+                    {{ option.estado }}
+                  </nb-option>
+                </nb-select>
+              </div>
+
+              <div class="full-name-inputs">
+                <input nbInput fullWidth
+                       [(ngModel)]="fechaCreacionDetalle"
+                       placeholder="Fecha Creación"
+                       [nbDatepicker]="fechaCreacionDetallePicker">
+                <nb-datepicker #fechaCreacionDetallePicker></nb-datepicker>
+              </div>
+
+              <div class="full-name-inputs">
+                <input type="text" [(ngModel)]="comentario" nbInput fullWidth placeholder="Comentario de la atención">
+              </div>
+
+              <div class="buttons-row">
+                <button (click)="saveDetalleButton()"  [disabled]="shouldDisableSaveDetailButton()" nbButton [status]="'primary'">
+                  {{getOperacionDetalle()}}
+                </button>
+                <button (click)="cleanDetalleForm()" nbButton [status]="'warning'">
+                  Limpiar
+                </button>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+        <ng2-smart-table  *ngIf="selectedId" class="order-table" (userRowSelect)="onSelectDetailRow($event)" [settings]="detailSettings" [source]="detalleSource">
         </ng2-smart-table>
       </nb-card-body>
     </nb-card>

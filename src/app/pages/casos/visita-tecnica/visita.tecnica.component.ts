@@ -6,6 +6,10 @@ import {NbToastrService} from "@nebular/theme";
 import {CasoService} from "../../../services/Caso/CasoService";
 import {VisitaTecnicaService} from "../../../services/VisitaTecnica/VisitaTecnicaService";
 import {EstadoVisitaService} from "../../../services/EstadoVisita/EstadoVisitaService";
+import {EstadoDetalleService} from "../../../services/EstadoDetalle/EstadoDetalleService";
+import {TecnicoService} from "../../../services/TecnicoService/TecnicoService";
+import {OperadorService} from "../../../services/Operador/OperadorService";
+import {DetalleVisitaTecnicaService} from "../../../services/DetalleVisitaTecnica/DetalleVisitaTecnicaService";
 
 @Component({
   selector: 'visita-tecnica-table',
@@ -16,6 +20,7 @@ export class VisitaTecnicaComponent {
   idForm: string = '';
 
   selectedId: number;
+  selectedDetailId: number;
   codigoCaso: string;
 
   fechaCreacion: Date;
@@ -34,6 +39,27 @@ export class VisitaTecnicaComponent {
   errorMsg: string = '';
   placeholder: string = 'Nombre ' + this.mantenedor;
 
+
+
+  // Detalle form
+
+  showDetalleForm: boolean = false;
+  idDetalleForm: string = '';
+  comentario: string = '';
+  fechaCreacionDetalle: Date;
+
+  //cbo
+  tecnicoCbo: any;
+  operadorCbo: any;
+  estadoDetalleVisitaCbo: any;
+
+  //ids
+  tecnicoId:number;
+  operadorId:number;
+  estadoDetalleVisitaId:number;
+
+
+  // master
   changeCasoTecnicoId(event){
     this.casoTecnicoId = event;
   }
@@ -41,6 +67,20 @@ export class VisitaTecnicaComponent {
   changeEstadoVisitaId(event){
     this.estadoVisitaId = event;
   }
+
+  // detail
+
+  changeTecnicoId(event){
+    this.tecnicoId = event;
+  }
+
+  changeOperadorId(event){
+    this.operadorId = event;
+  }
+  changeEstadoDetalleVisita(event){
+    this.estadoDetalleVisitaId = event;
+  }
+
 
   settings = {
     add: {
@@ -182,7 +222,11 @@ export class VisitaTecnicaComponent {
   detalleSource: LocalDataSource = new LocalDataSource();
 
   constructor(private visitaTecnicaService: VisitaTecnicaService,
+              private detalleVisitaTecnicaService: DetalleVisitaTecnicaService,
               private estadoVisitaService : EstadoVisitaService,
+              private estadoDetalleService : EstadoDetalleService,
+              private tecnicoService : TecnicoService,
+              private operadorService : OperadorService,
               private casoService : CasoService,
               private httpClient: HttpClient,
               private notificacionService: NbToastrService) {
@@ -229,6 +273,17 @@ export class VisitaTecnicaComponent {
         pagerLimitKey: 'size',
         totalKey: 'totalItems', //  total records returned in response path
       });
+
+
+    this.estadoDetalleService.sendGetRequest().subscribe((data: any[]) => {
+      this.estadoDetalleVisitaCbo = data['estados'];
+    });
+    this.operadorService.sendGetRequest().subscribe((data: any[]) => {
+      this.operadorCbo = data['operadores'];
+    });
+    this.tecnicoService.sendGetRequest().subscribe((data: any[]) => {
+      this.tecnicoCbo = data['tecnicos'];
+    });
   }
 
   onSelectRow(event): void {
@@ -236,6 +291,17 @@ export class VisitaTecnicaComponent {
     this.fechaCreacion = event.data.fechaCreacion;
     this.casoTecnicoId = event.data.casoTecnicoId;
     this.estadoVisitaId = event.data.estadoId;
+  }
+
+  onSelectDetailRow(event): void {
+    this.selectedDetailId = event.data.id
+    this.idDetalleForm = event.data.id;
+    this.tecnicoId = event.data.tecnicoId;
+    this.estadoDetalleVisitaId = event.data.estadoId;
+    this.operadorId = event.data.operadorId;
+    this.fechaCreacionDetalle = event.data.fecha
+    this.comentario = event.data.comentario
+    this.fechaCreacionDetalle = event.data.fecha;
   }
 
   onCreate(event): void {
@@ -250,8 +316,16 @@ export class VisitaTecnicaComponent {
     return this.idForm === '' ? 'Crear' : 'Actualizar';
   }
 
+  getOperacionDetalle(): string {
+    return this.idDetalleForm === '' ? 'Crear Detalle' : 'Actualizar Detalle';
+  }
+
   shouldDisableSaveButton():boolean{
     return !this.casoTecnicoId || !this.estadoVisitaId || !this.fechaCreacion;
+  }
+
+  shouldDisableSaveDetailButton():boolean{
+    return !this.tecnicoId || !this.estadoDetalleVisitaId || !this.operadorId || !this.fechaCreacionDetalle;
   }
 
   saveButton(){
@@ -272,6 +346,38 @@ export class VisitaTecnicaComponent {
     }
   }
 
+  saveDetalleButton(){
+    if(this.idDetalleForm === ''){
+      this.detalleVisitaTecnicaService.save(
+        this.tecnicoId,
+        this.operadorId,
+        this.selectedId,
+        this.fechaCreacion,
+        this.comentario,
+        this.estadoDetalleVisitaId
+        ).subscribe((data: any[]) => {
+        this.detalleVisitaTecnicaService.sendGetRequestById(this.selectedId).subscribe((data: any[]) => {
+          this.detalleSource.load(data[this.responseListName]);
+          this.mostrarNotificacionGrabado()
+        })
+      },this.manejarErrorSave());
+    } else {
+      this.detalleVisitaTecnicaService.update(
+        this.idDetalleForm,
+        this.tecnicoId,
+        this.operadorId,
+        this.selectedId,
+        this.fechaCreacion,
+        this.comentario,
+        this.estadoDetalleVisitaId).subscribe((data: any[]) => {
+        this.detalleVisitaTecnicaService.sendGetRequestById(this.selectedId).subscribe((data: any[]) => {
+          this.detalleSource.load(data[this.responseListName]);
+          this.mostrarNotificacionGrabado()
+        })
+      },this.manejarErrorSave());
+    }
+  }
+
   private manejarErrorSave() {
     return error => {
       window.alert(this.mantenedor + ' repetido, Ingrese otros valores') ;
@@ -284,6 +390,16 @@ export class VisitaTecnicaComponent {
     this.casoTecnicoId = null;
     this.estadoVisitaId = null;
     this.fechaCreacion = null;
+    this.selectedId = null;
+  }
+
+  cleanDetalleForm(){
+    this.idForm = '';
+    this.tecnicoId = null;
+    this.operadorId = null;
+    this.estadoVisitaId = null;
+    this.fechaCreacionDetalle = null;
+    this.comentario = '';
     this.selectedId = null;
   }
 

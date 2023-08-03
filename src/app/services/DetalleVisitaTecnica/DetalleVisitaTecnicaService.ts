@@ -12,6 +12,10 @@ export class DetalleVisitaTecnicaService {
     return this.httpClient.get(ServiceConstants.GET_DETALLE_VISITA_TECNICA_PATH);
   }
 
+  public sendGetRequestById(id: number){
+    return this.httpClient.get(ServiceConstants.GET_DETALLE_VISITA_TECNICA_PATH + '/'+id);
+  }
+
   public sendGetRequestPaginated(page: number, size: number){
     let queryParams = new HttpParams();
     queryParams.append("page",page);
@@ -19,14 +23,11 @@ export class DetalleVisitaTecnicaService {
     return this.httpClient.get(ServiceConstants.GET_DETALLE_VISITA_TECNICA_PATH,{params:queryParams});
   }
 
-  public save(casoTecnicoId : number,
-              tecnicoId : number,
+  public save(tecnicoId : number,
               operadorId : number,
               visitaTecnicaId : number,
               fecha : Date,
-              hora : string,
               comentario : string,
-              estadoAnterior : string,
               estadoId : number){
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post(ServiceConstants.GET_DETALLE_VISITA_TECNICA_PATH,{
@@ -34,21 +35,17 @@ export class DetalleVisitaTecnicaService {
       'operadorId': operadorId,
       'visitaTecnicaId': visitaTecnicaId,
       'fecha': fecha,
-      'hora': hora,
-      'estadoAnterior': estadoAnterior,
       'comentario': comentario,
       'estadoId': estadoId
     },{ headers: headers});
   }
 
-  public update(id : number,
+  public update(id : string,
                 tecnicoId : number,
                 operadorId : number,
                 visitaTecnicaId : number,
                 fecha : Date,
-                hora : string,
                 comentario : string,
-                estadoAnterior : string,
                 estadoId : number){
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put(ServiceConstants.GET_DETALLE_VISITA_TECNICA_PATH+'/'+id,
@@ -58,8 +55,6 @@ export class DetalleVisitaTecnicaService {
         'operadorId': operadorId,
         'visitaTecnicaId': visitaTecnicaId,
         'fecha': fecha,
-        'hora': hora,
-        'estadoAnterior': estadoAnterior,
         'comentario': comentario,
         'estadoId': estadoId
       },{ headers: headers});

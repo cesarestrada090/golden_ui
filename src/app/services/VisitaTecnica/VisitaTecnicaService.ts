@@ -19,6 +19,11 @@ export class VisitaTecnicaService {
     return this.httpClient.get(ServiceConstants.GET_VISITA_TECNICA_PATH,{params:queryParams});
   }
 
+  public sendGetRequestById(id: number){
+    return this.httpClient.get(ServiceConstants.GET_VISITA_TECNICA_PATH + '/'+id);
+  }
+
+
   public save(casoTecnicoId : number,
               estadoId : number,
               fechaCreacion: Date){

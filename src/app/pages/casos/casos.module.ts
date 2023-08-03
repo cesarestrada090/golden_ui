@@ -28,6 +28,8 @@ import {VisitaTecnicaService} from "../../services/VisitaTecnica/VisitaTecnicaSe
 import {DetalleVisitaTecnicaService} from "../../services/DetalleVisitaTecnica/DetalleVisitaTecnicaService";
 import {EstadoVisitaService} from "../../services/EstadoVisita/EstadoVisitaService";
 import {VisitaTecnicaComponent} from "./visita-tecnica/visita.tecnica.component";
+import {EstadoDetalleService} from "../../services/EstadoDetalle/EstadoDetalleService";
+import {OperadorService} from "../../services/Operador/OperadorService";
 
 @NgModule({
   imports: [
@@ -63,7 +65,9 @@ import {VisitaTecnicaComponent} from "./visita-tecnica/visita.tecnica.component"
     VisitaTecnicaService,
     EstadoVisitaService,
     DetalleVisitaTecnicaService,
-    TecnicoService
+    TecnicoService,
+    EstadoDetalleService,
+    OperadorService
   ]
 })
 export class CasosModule { }
