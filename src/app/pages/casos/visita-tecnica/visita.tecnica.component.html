@@ -58,7 +58,7 @@
       </nb-card-header>
       <nb-card-body>
 
-        <div class="col-lg-12" *ngIf="selectedDetailId">
+        <div class="col-lg-12" *ngIf="this.createDetailFormEnabled">
           <nb-card>
             <nb-card-header>{{getOperacionDetalle()}} </nb-card-header>
             <nb-card-body>
@@ -117,6 +117,11 @@
 
         <ng2-smart-table  *ngIf="selectedId" class="order-table" (userRowSelect)="onSelectDetailRow($event)" [settings]="detailSettings" [source]="detalleSource">
         </ng2-smart-table>
+        <div class="buttons-row">
+          <button (click)="activarDesactivarDetalleForm()" nbButton [status]="'primary'">
+            Activar/Limpiar formulario Detalle
+          </button>
+        </div>
       </nb-card-body>
     </nb-card>
 

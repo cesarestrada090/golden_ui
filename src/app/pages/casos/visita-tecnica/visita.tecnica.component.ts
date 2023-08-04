@@ -20,7 +20,7 @@ export class VisitaTecnicaComponent {
   idForm: string = '';
 
   selectedId: number;
-  selectedDetailId: number;
+  selectedDetailId: boolean = false;
   codigoCaso: string;
 
   fechaCreacion: Date;
@@ -45,6 +45,7 @@ export class VisitaTecnicaComponent {
 
   showDetalleForm: boolean = false;
   idDetalleForm: string = '';
+  createDetailFormEnabled: boolean = false;
   comentario: string = '';
   fechaCreacionDetalle: Date;
 
@@ -169,13 +170,18 @@ export class VisitaTecnicaComponent {
     actions: {
       columnTitle: 'Acciones',
       add: false,
-      edit: true,
+      edit: false,
       delete: false,
       position: 'right',
     },
     columns: {
       id: {
         title: 'ID',
+        type: 'number',
+        filter: false
+      },
+      visitaTecnicaId: {
+        title: 'Código Visita Técnica',
         type: 'number',
         filter: false
       },
@@ -206,11 +212,6 @@ export class VisitaTecnicaComponent {
       },
       comentario: {
         title: 'Comentario',
-        type: 'string',
-        filter: false
-      },
-      estadoAnterior: {
-        title: 'Estado Anterior',
         type: 'string',
         filter: false
       }
@@ -294,7 +295,8 @@ export class VisitaTecnicaComponent {
   }
 
   onSelectDetailRow(event): void {
-    this.selectedDetailId = event.data.id
+    this.createDetailFormEnabled = true;
+    this.selectedDetailId = true;
     this.idDetalleForm = event.data.id;
     this.tecnicoId = event.data.tecnicoId;
     this.estadoDetalleVisitaId = event.data.estadoId;
@@ -329,14 +331,14 @@ export class VisitaTecnicaComponent {
 
   saveButton(){
     if(this.idForm === ''){
-      this.visitaTecnicaService.save(this.casoTecnicoId,this.estadoVisitaId,this.fechaCreacionDetalle).subscribe((data: any[]) => {
+      this.visitaTecnicaService.save(this.casoTecnicoId,this.estadoVisitaId,this.fechaCreacion).subscribe((data: any[]) => {
         this.visitaTecnicaService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
           this.mostrarNotificacionGrabado()
         })
       },this.manejarErrorSave());
     } else {
-      this.visitaTecnicaService.update(this.idForm,this.casoTecnicoId,this.estadoVisitaId,this.fechaCreacionDetalle).subscribe((data: any[]) => {
+      this.visitaTecnicaService.update(this.idForm,this.casoTecnicoId,this.estadoVisitaId,this.fechaCreacion).subscribe((data: any[]) => {
         this.visitaTecnicaService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
           this.mostrarNotificacionGrabado()
@@ -351,7 +353,7 @@ export class VisitaTecnicaComponent {
         this.tecnicoId,
         this.operadorId,
         this.selectedId,
-        this.fechaCreacion,
+        this.fechaCreacionDetalle,
         this.comentario,
         this.estadoDetalleVisitaId
         ).subscribe((data: any[]) => {
@@ -366,7 +368,7 @@ export class VisitaTecnicaComponent {
         this.tecnicoId,
         this.operadorId,
         this.selectedId,
-        this.fechaCreacion,
+        this.fechaCreacionDetalle,
         this.comentario,
         this.estadoDetalleVisitaId).subscribe((data: any[]) => {
         this.detalleVisitaTecnicaService.sendGetRequestById(this.selectedId).subscribe((data: any[]) => {
@@ -390,16 +392,28 @@ export class VisitaTecnicaComponent {
     this.estadoVisitaId = null;
     this.fechaCreacion = null;
     this.selectedId = null;
+    this.idDetalleForm = '';
+    this.selectedDetailId = null;
   }
-
   cleanDetalleForm(){
-    this.idForm = '';
+    this.idDetalleForm = '';
     this.tecnicoId = null;
     this.operadorId = null;
     this.estadoVisitaId = null;
+    this.estadoDetalleVisitaId = null;
     this.fechaCreacionDetalle = null;
     this.comentario = '';
-    this.selectedId = null;
+  }
+
+  activarDesactivarDetalleForm(){
+    this.createDetailFormEnabled = !this.createDetailFormEnabled;
+    this.idDetalleForm = '';
+    this.tecnicoId = null;
+    this.operadorId = null;
+    this.estadoDetalleVisitaId = null;
+    this.estadoVisitaId = null;
+    this.fechaCreacionDetalle = null;
+    this.comentario = '';
   }
 
   private mostrarNotificacionGrabado() {
