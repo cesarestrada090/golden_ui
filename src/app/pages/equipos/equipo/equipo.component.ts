@@ -9,6 +9,8 @@ import {EstadoEquipoService} from "../../../services/EstadoEquipo/EstadoEquipoSe
 import {SedeService} from "../../../services/Sede/SedeService";
 import {AreaService} from "../../../services/Area/AreaService";
 import {ClienteService} from "../../../services/Cliente/ClienteService";
+import {EstadoContractualService} from "../../../services/EstadoContractual/EstadoContractualService";
+import {UbicacionEquipolService} from "../../../services/UbicacionEquipo/UbicacionEquipolService";
 
 @Component({
   selector: 'equipo-table',
@@ -25,6 +27,9 @@ export class EquipoComponent {
   sedeCbo: any[];
   areaCbo: any[];
   clienteCbo: any[];
+  ubicacionEquipoCbo: any[];
+  estadoContractualCbo: any[];
+  ddcCbo: any[];
 
   //cbo ids
   modeloId:number;
@@ -32,6 +37,9 @@ export class EquipoComponent {
   sedeId:number;
   areaId:number;
   clienteId:number;
+  ubicacionEquipoId:number;
+  ddcId:string;
+  estadoContractualId:number;
 
   mantenedor: string = "Equipo";
   responseListName: string = "equipos";
@@ -55,6 +63,16 @@ export class EquipoComponent {
   }
   changeAreaId(event){
     this.areaId = event;
+  }
+
+  changeEstadoContractualId(event){
+    this.estadoContractualId = event;
+  }
+  changeUbicacionEquipoId(event){
+    this.ubicacionEquipoId = event;
+  }
+  changeDdcId(event){
+    this.ddcId = event;
   }
 
   settings = {
@@ -100,12 +118,12 @@ export class EquipoComponent {
         filter: false
       },
       nombreModelo: {
-        title: 'Nombre Modelo',
+        title: 'Modelo',
         type: 'string',
         filter: false
       },
       estadoEstadoEquipo: {
-        title: 'Estado Equipo',
+        title: 'Estado Operativo',
         type: 'string',
         filter: false
       },
@@ -116,6 +134,21 @@ export class EquipoComponent {
       },
       nombreArea: {
         title: 'Área',
+        type: 'string',
+        filter: false
+      },
+      ubicacionEquipo: {
+        title: 'Ubicación',
+        type: 'string',
+        filter: false
+      },
+      estadoContractual: {
+        title: 'Estado Contractual',
+        type: 'string',
+        filter: false
+      },
+      ddc: {
+        title: 'DDC',
         type: 'string',
         filter: false
       }
@@ -130,6 +163,8 @@ export class EquipoComponent {
               private sedeService : SedeService,
               private areaService : AreaService,
               private clienteService : ClienteService,
+              private estadoContractualService : EstadoContractualService,
+              private ubicacionEquipolService : UbicacionEquipolService,
               private httpClient: HttpClient,
               private notificacionService: NbToastrService) {
     this.loadInitialData();
@@ -149,6 +184,13 @@ export class EquipoComponent {
     this.clienteService.sendGetRequest().subscribe((data: any[]) => {
       this.clienteCbo = data['clientes'];
     });
+    this.ubicacionEquipolService.sendGetRequest().subscribe((data: any[]) => {
+      this.ubicacionEquipoCbo = data['ubicacionEquipos'];
+    });
+    this.estadoContractualService.sendGetRequest().subscribe((data: any[]) => {
+      this.estadoContractualCbo = data['estadosContractuales'];
+    });
+    this.ddcCbo = [{id: 'Registrado', value: 'Registrado'},{id: 'No Registrado', value: 'No Registrado'}];
   }
 
   private loadInitialData() {
@@ -179,8 +221,11 @@ export class EquipoComponent {
     this.idForm = event.data.id;
     this.serie = event.data.serie;
     this.clienteId = event.data.clienteId;
+    this.ddcId = event.data.ddc;
     this.modeloId = event.data.modeloId;
     this.estadoEquipoId = event.data.estadoEquipoId;
+    this.estadoContractualId = event.data.estadoContractualId;
+    this.ubicacionEquipoId = event.data.ubicacionEquipoId;
     this.sedeId = event.data.sedeId;
     this.areaId = event.data.areaId;
   }
@@ -203,14 +248,32 @@ export class EquipoComponent {
 
   saveButton(){
     if(this.idForm === ''){
-      this.equipoService.save(this.serie,this.modeloId,this.estadoEquipoId,this.sedeId,this.areaId,this.clienteId).subscribe((data: any[]) => {
+      this.equipoService.save(
+        this.serie,this.modeloId,
+        this.estadoEquipoId,
+        this.sedeId,
+        this.areaId,
+        this.clienteId,
+        this.estadoContractualId,
+        this.ubicacionEquipoId,
+        this.ddcId).subscribe((data: any[]) => {
         this.equipoService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
           this.mostrarNotificacionGrabado()
         })
       },this.manejarErrorSave());
     } else {
-      this.equipoService.update(this.idForm, this.serie,this.modeloId,this.estadoEquipoId,this.sedeId,this.areaId,this.clienteId).subscribe((data: any[]) => {
+      this.equipoService.update(
+        this.idForm,
+        this.serie,
+        this.modeloId,
+        this.estadoEquipoId,
+        this.sedeId,
+        this.areaId,
+        this.clienteId,
+        this.estadoContractualId,
+        this.ubicacionEquipoId,
+        this.ddcId).subscribe((data: any[]) => {
         this.equipoService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
           this.mostrarNotificacionGrabado()
@@ -232,7 +295,10 @@ export class EquipoComponent {
     this.modeloId = null;
     this.clienteId = null;
     this.sedeId = null;
+    this.ddcId = '';
     this.areaId = null;
+    this.estadoContractualId = null;
+    this.ubicacionEquipoId = null;
     this.estadoEquipoId = null;
   }
 

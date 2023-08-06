@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule } from '@nebular/theme';
+import {NbMenuModule, NbTimepickerModule} from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -11,7 +11,7 @@ import { ConfiguracionModule } from './configuracion/configuracion.module';
     PagesRoutingModule,
     ThemeModule,
     NbMenuModule,
-    ConfiguracionModule,
+    ConfiguracionModule
   ],
   declarations: [
     PagesComponent,

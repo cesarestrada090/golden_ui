@@ -10,6 +10,7 @@ import {EstadoDetalleService} from "../../../services/EstadoDetalle/EstadoDetall
 import {TecnicoService} from "../../../services/TecnicoService/TecnicoService";
 import {OperadorService} from "../../../services/Operador/OperadorService";
 import {DetalleVisitaTecnicaService} from "../../../services/DetalleVisitaTecnica/DetalleVisitaTecnicaService";
+import {Time} from "@angular/common";
 
 @Component({
   selector: 'visita-tecnica-table',
@@ -48,6 +49,7 @@ export class VisitaTecnicaComponent {
   createDetailFormEnabled: boolean = false;
   comentario: string = '';
   fechaCreacionDetalle: Date;
+  horaDetalle: Date;
 
   //cbo
   tecnicoCbo: any;
@@ -145,6 +147,11 @@ export class VisitaTecnicaComponent {
           let parsedDate = new Date(cell);
           return parsedDate.toLocaleDateString('ES-en', { weekday:"long", year:"numeric", month:"short", day:"numeric"});
         }
+      },
+      cantidadVisitas: {
+        title: 'Número de Visitas',
+        type: 'string',
+        filter: false
       }
     },
   };
@@ -203,6 +210,18 @@ export class VisitaTecnicaComponent {
         valuePrepareFunction: (cell: any, row: any) =>{
           let parsedDate = new Date(cell);
           return parsedDate.toLocaleDateString('ES-en', { weekday:"long", year:"numeric", month:"short", day:"numeric"});
+        }
+      },
+      hora: {
+        title: 'Hora',
+        type: 'string',
+        filter: false,
+        class: 'colDate',
+        valuePrepareFunction: (cell: any, row: any) =>{
+          let parsedDate = new Date(cell);
+          const minutes = String(parsedDate.getMinutes()).padStart(2, '0');
+          const hour = String(parsedDate.getHours()).padStart(2, '0');
+          return hour +':'+ minutes;
         }
       },
       estadoEstadoDetalleVisita: {
@@ -264,6 +283,8 @@ export class VisitaTecnicaComponent {
     }
   }
   onViewVisitaTecnica(event): void {
+    this.cleanDetalleForm();
+    this.createDetailFormEnabled = false;
     this.selectedId = event.data.id;
     this.codigoCaso = event.data.codigoCasoTecnico;
     this.detalleSource = new ServerDataSource(this.httpClient,
@@ -302,6 +323,7 @@ export class VisitaTecnicaComponent {
     this.estadoDetalleVisitaId = event.data.estadoId;
     this.operadorId = event.data.operadorId;
     this.comentario = event.data.comentario
+    this.horaDetalle = new Date(event.data.hora);
     this.fechaCreacionDetalle = event.data.fecha;
   }
 
@@ -355,11 +377,12 @@ export class VisitaTecnicaComponent {
         this.selectedId,
         this.fechaCreacionDetalle,
         this.comentario,
-        this.estadoDetalleVisitaId
+        this.estadoDetalleVisitaId,
+        this.horaDetalle
         ).subscribe((data: any[]) => {
         this.detalleVisitaTecnicaService.sendGetRequestById(this.selectedId).subscribe((data: any[]) => {
           this.detalleSource.load(data[this.responseListName]);
-          this.mostrarNotificacionGrabado()
+          this.mostrarNotificacionGrabadoDetalle()
         })
       },this.manejarErrorSave());
     } else {
@@ -370,10 +393,11 @@ export class VisitaTecnicaComponent {
         this.selectedId,
         this.fechaCreacionDetalle,
         this.comentario,
-        this.estadoDetalleVisitaId).subscribe((data: any[]) => {
+        this.estadoDetalleVisitaId,
+        this.horaDetalle).subscribe((data: any[]) => {
         this.detalleVisitaTecnicaService.sendGetRequestById(this.selectedId).subscribe((data: any[]) => {
           this.detalleSource.load(data[this.responseListName]);
-          this.mostrarNotificacionGrabado()
+          this.mostrarNotificacionGrabadoDetalle()
         })
       },this.manejarErrorSave());
     }
@@ -394,6 +418,7 @@ export class VisitaTecnicaComponent {
     this.selectedId = null;
     this.idDetalleForm = '';
     this.selectedDetailId = null;
+    this.cleanDetalleForm();
   }
   cleanDetalleForm(){
     this.idDetalleForm = '';
@@ -412,6 +437,7 @@ export class VisitaTecnicaComponent {
     this.operadorId = null;
     this.estadoDetalleVisitaId = null;
     this.estadoVisitaId = null;
+    this.horaDetalle = null;
     this.fechaCreacionDetalle = null;
     this.comentario = '';
   }
@@ -420,6 +446,12 @@ export class VisitaTecnicaComponent {
     this.notificacionService.show(
       '',
       this.idForm == '' ? ServiceConstants.GET_SAVE_NOTIFICATION_MESSAGE : ServiceConstants.GET_UPDATE_NOTIFICATION_MESSAGE,
+      ServiceConstants.SAVE_TOAST_CONFIG);
+  }
+  private mostrarNotificacionGrabadoDetalle() {
+    this.notificacionService.show(
+      '',
+      this.idDetalleForm == '' ? ServiceConstants.GET_SAVE_NOTIFICATION_MESSAGE : ServiceConstants.GET_UPDATE_NOTIFICATION_MESSAGE,
       ServiceConstants.SAVE_TOAST_CONFIG);
   }
 }

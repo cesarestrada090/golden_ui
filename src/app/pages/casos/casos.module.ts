@@ -4,7 +4,7 @@ import {
   NbCardModule,
   NbDatepickerModule,
   NbIconModule,
-  NbInputModule, NbOptionModule, NbSelectModule,
+  NbInputModule, NbOptionModule, NbSelectModule, NbTimepickerModule,
   NbTreeGridModule
 } from '@nebular/theme';
 
@@ -47,6 +47,7 @@ import {OperadorService} from "../../services/Operador/OperadorService";
     Ng2SmartTableModule,
     NbOptionModule,
     NbSelectModule,
+    NbTimepickerModule
   ],
   declarations: [
     CasosComponent,

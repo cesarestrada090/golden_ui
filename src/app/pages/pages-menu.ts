@@ -43,8 +43,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/general/estado-sede',
       },
       {
+        title: 'Ubicación Equipo',
+        link: '/pages/general/ubicacion-equipo',
+      },
+      {
         title: 'Estado Detalle Visita',
         link: '/pages/general/estado-detalle',
+      },
+      {
+        title: 'Estado Contractual',
+        link: '/pages/general/estado-contractual',
       }
     ],
   },

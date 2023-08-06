@@ -16,7 +16,7 @@ import {
   NbDatepickerModule,
   NbDialogModule,
   NbMenuModule,
-  NbSidebarModule,
+  NbSidebarModule, NbTimepickerModule,
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
@@ -34,6 +34,7 @@ import {
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
+    NbTimepickerModule.forRoot(),
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),

@@ -37,6 +37,8 @@ import {ModeloSuministroComponent} from "./modelo-suministro/modelo.suministro.c
 import {EquipoComponent} from "./equipo/equipo.component";
 import {EquipoService} from "../../services/Equipo/EquipoService";
 import {EstadoEquipoService} from "../../services/EstadoEquipo/EstadoEquipoService";
+import {UbicacionEquipolService} from "../../services/UbicacionEquipo/UbicacionEquipolService";
+import {EstadoContractualService} from "../../services/EstadoContractual/EstadoContractualService";
 
 @NgModule({
   imports: [
@@ -81,7 +83,9 @@ import {EstadoEquipoService} from "../../services/EstadoEquipo/EstadoEquipoServi
     ModeloService,
     ModeloSuministroService,
     EquipoService,
-    EstadoEquipoService
+    EstadoEquipoService,
+    UbicacionEquipolService,
+    EstadoContractualService
   ]
 })
 export class EquiposModule { }

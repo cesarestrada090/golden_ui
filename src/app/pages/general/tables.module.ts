@@ -15,6 +15,8 @@ import {EstadoSedeService} from "../../services/EstadoSede/EstadoSedeService";
 import {EstadoDetalleService} from "../../services/EstadoDetalle/EstadoDetalleService";
 import {EstadoSuministroService} from "../../services/EstadoSuministro/EstadoSuministroService";
 import {EstadoVisitaService} from "../../services/EstadoVisita/EstadoVisitaService";
+import {UbicacionEquipolService} from "../../services/UbicacionEquipo/UbicacionEquipolService";
+import {EstadoContractualService} from "../../services/EstadoContractual/EstadoContractualService";
 
 @NgModule({
   imports: [
@@ -40,7 +42,9 @@ import {EstadoVisitaService} from "../../services/EstadoVisita/EstadoVisitaServi
     EstadoSedeService,
     EstadoDetalleService,
     EstadoSuministroService,
-    EstadoVisitaService
+    EstadoVisitaService,
+    UbicacionEquipolService,
+    EstadoContractualService
   ]
 })
 export class TablesModule { }

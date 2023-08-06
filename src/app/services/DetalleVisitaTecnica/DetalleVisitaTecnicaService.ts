@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {ServiceConstants} from "../../constants/ServiceConstants";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {Time} from "@angular/common";
 
 @Injectable()
 export class DetalleVisitaTecnicaService {
@@ -28,7 +29,8 @@ export class DetalleVisitaTecnicaService {
               visitaTecnicaId : number,
               fecha : Date,
               comentario : string,
-              estadoId : number){
+              estadoId : number,
+              hora: Date){
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post(ServiceConstants.GET_DETALLE_VISITA_TECNICA_PATH,{
       'tecnicoId': tecnicoId,
@@ -36,7 +38,8 @@ export class DetalleVisitaTecnicaService {
       'visitaTecnicaId': visitaTecnicaId,
       'fecha': fecha,
       'comentario': comentario,
-      'estadoId': estadoId
+      'estadoId': estadoId,
+      'hora': hora
     },{ headers: headers});
   }
 
@@ -46,7 +49,8 @@ export class DetalleVisitaTecnicaService {
                 visitaTecnicaId : number,
                 fecha : Date,
                 comentario : string,
-                estadoId : number){
+                estadoId : number,
+                hora: Date){
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put(ServiceConstants.GET_DETALLE_VISITA_TECNICA_PATH+'/'+id,
       {
@@ -56,7 +60,8 @@ export class DetalleVisitaTecnicaService {
         'visitaTecnicaId': visitaTecnicaId,
         'fecha': fecha,
         'comentario': comentario,
-        'estadoId': estadoId
+        'estadoId': estadoId,
+        'hora': hora
       },{ headers: headers});
   }
 }

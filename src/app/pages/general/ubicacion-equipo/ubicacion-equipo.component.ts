@@ -1,22 +1,20 @@
 import { Component } from '@angular/core';
 import {LocalDataSource, ServerDataSource} from 'ng2-smart-table';
 
-import { SmartTableData } from '../../../@core/data/smart-table';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {TipoModeloService} from "../../../services/TipoModelo/TipoModeloService";
 import {ServiceConstants} from "../../../constants/ServiceConstants";
-import {EstadoEquipoService} from "../../../services/EstadoEquipo/EstadoEquipoService";
+import {UbicacionEquipolService} from "../../../services/UbicacionEquipo/UbicacionEquipolService";
 
 @Component({
-  selector: 'estado-equipo-table',
-  templateUrl: './estado-equipo.component.html',
-  styleUrls: ['./estado-equipo.component.scss'],
+  selector: 'ubicacion-equipo-table',
+  templateUrl: './ubicacion-equipo.component.html',
+  styleUrls: ['./ubicacion-equipo.component.scss'],
 })
-export class EstadoEquipoComponent {
+export class UbicacionEquipoComponent {
   idForm: string = '';
-  nombreEstado: string = '';
-  mantenedor: string = "Estado Operativo Del Equipo";
-  responseListName: string = "estadoEquipos";
+  ubicacion: string = '';
+  mantenedor: string = "Ubicación Equipo";
+  responseListName: string = "ubicacionEquipos";
   placeholder: string = 'Nombre ' + this.mantenedor;
 
   settings = {
@@ -51,8 +49,8 @@ export class EstadoEquipoComponent {
         type: 'number',
         filter: false
       },
-      estado: {
-        title: 'Estado',
+      ubicacion: {
+        title: 'Ubicacion',
         type: 'string',
         filter: false
       }
@@ -61,17 +59,17 @@ export class EstadoEquipoComponent {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData,private estadoEquipoService : EstadoEquipoService,private httpClient: HttpClient) {
+  constructor(private ubicacionEquipolService : UbicacionEquipolService,private httpClient: HttpClient) {
     this.loadInitialData();
   }
 
   private loadInitialData() {
 
 
-    this.estadoEquipoService.sendGetRequest().subscribe((data: any[]) => {
+    this.ubicacionEquipolService.sendGetRequest().subscribe((data: any[]) => {
       this.source = new ServerDataSource(this.httpClient,
         {
-          endPoint: ServiceConstants.GET_ESTADO_EQUIPO_PATH, //full-url-for-endpoint without any query strings
+          endPoint: ServiceConstants.GET_UBICACION_EQUIPO_PATH, //full-url-for-endpoint without any query strings
           dataKey: this.responseListName,
           pagerPageKey: 'page',
           pagerLimitKey: 'size',
@@ -82,7 +80,6 @@ export class EstadoEquipoComponent {
   }
 
   onDeleteConfirm(event): void {
-    console.log('sss');
     if (window.confirm(ServiceConstants.GET_DELETE_CONFIRM_MESSAGE)) {
       event.confirm.resolve();
     } else {
@@ -92,7 +89,7 @@ export class EstadoEquipoComponent {
 
   onSelectRow(event): void {
     this.idForm = event.data.id;
-    this.nombreEstado = event.data.estado;
+    this.ubicacion = event.data.ubicacion;
   }
 
   onCreate(event): void {
@@ -108,19 +105,19 @@ export class EstadoEquipoComponent {
   }
 
   shouldDisableSaveButton():boolean{
-    return this.nombreEstado === '';
+    return this.ubicacion === '';
   }
 
   saveButton(){
     if(this.idForm === ''){
-      this.estadoEquipoService.save(this.nombreEstado).subscribe((data: any[]) => {
-        this.estadoEquipoService.sendGetRequest().subscribe((data: any[]) => {
+      this.ubicacionEquipolService.save(this.ubicacion).subscribe((data: any[]) => {
+        this.ubicacionEquipolService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
       },this.manejarErrorSave());
     } else {
-      this.estadoEquipoService.update(this.idForm , this.nombreEstado).subscribe((data: any[]) => {
-        this.estadoEquipoService.sendGetRequest().subscribe((data: any[]) => {
+      this.ubicacionEquipolService.update(this.idForm , this.ubicacion).subscribe((data: any[]) => {
+        this.ubicacionEquipolService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
       },this.manejarErrorSave());
@@ -133,8 +130,9 @@ export class EstadoEquipoComponent {
       console.log(error);
     };
   }
+
   cleanForm(){
     this.idForm = '';
-    this.nombreEstado = '';
+    this.ubicacion = '';
   }
 }

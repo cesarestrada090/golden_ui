@@ -54,6 +54,30 @@
             </nb-select>
           </div>
 
+          <div class="full-name-inputs">
+            <nb-select placeholder="Estado Contractual" *ngIf="estadoContractualCbo" fullWidth (selectedChange)="changeEstadoContractualId($event)" selected="{{estadoContractualId}}" >
+              <nb-option *ngFor="let option of estadoContractualCbo" value="{{ option.id }}">
+                {{ option.estado }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="full-name-inputs">
+            <nb-select placeholder="Ubicación Equipo" *ngIf="ubicacionEquipoCbo" fullWidth (selectedChange)="changeUbicacionEquipoId($event)" selected="{{ubicacionEquipoId}}" >
+              <nb-option *ngFor="let option of ubicacionEquipoCbo" value="{{ option.id }}">
+                {{ option.ubicacion }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="full-name-inputs">
+            <nb-select placeholder="DDC" fullWidth (selectedChange)="changeDdcId($event)" selected="{{ddcId}}" >
+              <nb-option *ngFor="let option of ddcCbo" value="{{ option.id }}">
+                {{ option.value }}
+              </nb-option>
+            </nb-select>
+          </div>
+
           <div class="buttons-row">
             <button (click)="saveButton()"  [disabled]="shouldDisableSaveButton()" nbButton [status]="'primary'">
               {{getOperacion()}}

@@ -60,7 +60,12 @@ export class ServiceConstants {
   public static get GET_TIPO_SUMINISTRO_PATH() : string {
     return this.GET_API_PATH + '/tipoSuministro';
   }
-
+  public static get GET_ESTADO_CONTRACTUAL_PATH() : string {
+    return this.GET_API_PATH + '/estadoContractual';
+  }
+  public static get GET_UBICACION_EQUIPO_PATH() : string {
+    return this.GET_API_PATH + '/ubicacionEquipo';
+  }
 
   // CONFIGURATION
 

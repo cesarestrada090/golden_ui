@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 import {LocalDataSource, ServerDataSource} from 'ng2-smart-table';
 
-import { SmartTableData } from '../../../@core/data/smart-table';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {TipoModeloService} from "../../../services/TipoModelo/TipoModeloService";
 import {ServiceConstants} from "../../../constants/ServiceConstants";
-import {EstadoEquipoService} from "../../../services/EstadoEquipo/EstadoEquipoService";
+import {UbicacionEquipolService} from "../../../services/UbicacionEquipo/UbicacionEquipolService";
+import {EstadoContractualService} from "../../../services/EstadoContractual/EstadoContractualService";
 
 @Component({
-  selector: 'estado-equipo-table',
-  templateUrl: './estado-equipo.component.html',
-  styleUrls: ['./estado-equipo.component.scss'],
+  selector: 'estado-contratual-table',
+  templateUrl: './estado-contractual.component.html',
+  styleUrls: ['./estado-contractual.component.scss'],
 })
-export class EstadoEquipoComponent {
+export class EstadoContractualComponent {
   idForm: string = '';
-  nombreEstado: string = '';
-  mantenedor: string = "Estado Operativo Del Equipo";
-  responseListName: string = "estadoEquipos";
+  estado: string = '';
+  descripcion: string = '';
+  mantenedor: string = "Estados Contractuales";
+  responseListName: string = "estadosContractuales";
   placeholder: string = 'Nombre ' + this.mantenedor;
 
   settings = {
@@ -52,7 +52,12 @@ export class EstadoEquipoComponent {
         filter: false
       },
       estado: {
-        title: 'Estado',
+        title: 'Ubicacion',
+        type: 'string',
+        filter: false
+      },
+      descripcion: {
+        title: 'Descripción',
         type: 'string',
         filter: false
       }
@@ -61,17 +66,17 @@ export class EstadoEquipoComponent {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData,private estadoEquipoService : EstadoEquipoService,private httpClient: HttpClient) {
+  constructor(private estadoContractualService : EstadoContractualService,private httpClient: HttpClient) {
     this.loadInitialData();
   }
 
   private loadInitialData() {
 
 
-    this.estadoEquipoService.sendGetRequest().subscribe((data: any[]) => {
+    this.estadoContractualService.sendGetRequest().subscribe((data: any[]) => {
       this.source = new ServerDataSource(this.httpClient,
         {
-          endPoint: ServiceConstants.GET_ESTADO_EQUIPO_PATH, //full-url-for-endpoint without any query strings
+          endPoint: ServiceConstants.GET_ESTADO_CONTRACTUAL_PATH, //full-url-for-endpoint without any query strings
           dataKey: this.responseListName,
           pagerPageKey: 'page',
           pagerLimitKey: 'size',
@@ -82,7 +87,6 @@ export class EstadoEquipoComponent {
   }
 
   onDeleteConfirm(event): void {
-    console.log('sss');
     if (window.confirm(ServiceConstants.GET_DELETE_CONFIRM_MESSAGE)) {
       event.confirm.resolve();
     } else {
@@ -92,7 +96,8 @@ export class EstadoEquipoComponent {
 
   onSelectRow(event): void {
     this.idForm = event.data.id;
-    this.nombreEstado = event.data.estado;
+    this.estado = event.data.estado;
+    this.descripcion = event.data.descripcion;
   }
 
   onCreate(event): void {
@@ -108,19 +113,19 @@ export class EstadoEquipoComponent {
   }
 
   shouldDisableSaveButton():boolean{
-    return this.nombreEstado === '';
+    return this.estado === '';
   }
 
   saveButton(){
     if(this.idForm === ''){
-      this.estadoEquipoService.save(this.nombreEstado).subscribe((data: any[]) => {
-        this.estadoEquipoService.sendGetRequest().subscribe((data: any[]) => {
+      this.estadoContractualService.save(this.estado,this.descripcion).subscribe((data: any[]) => {
+        this.estadoContractualService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
       },this.manejarErrorSave());
     } else {
-      this.estadoEquipoService.update(this.idForm , this.nombreEstado).subscribe((data: any[]) => {
-        this.estadoEquipoService.sendGetRequest().subscribe((data: any[]) => {
+      this.estadoContractualService.update(this.idForm , this.estado,this.descripcion).subscribe((data: any[]) => {
+        this.estadoContractualService.sendGetRequest().subscribe((data: any[]) => {
           this.source.load(data[this.responseListName]);
         })
       },this.manejarErrorSave());
@@ -133,8 +138,10 @@ export class EstadoEquipoComponent {
       console.log(error);
     };
   }
+
   cleanForm(){
     this.idForm = '';
-    this.nombreEstado = '';
+    this.estado = '';
+    this.descripcion = '';
   }
 }

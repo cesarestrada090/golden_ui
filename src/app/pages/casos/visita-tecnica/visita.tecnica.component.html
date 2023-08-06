@@ -100,6 +100,13 @@
               </div>
 
               <div class="full-name-inputs">
+                <input nbInput fullWidth [(ngModel)]="horaDetalle" [nbTimepicker]="timepicker">
+                <nb-timepicker #timepicker></nb-timepicker>
+              </div>
+
+
+
+              <div class="full-name-inputs">
                 <input type="text" [(ngModel)]="comentario" nbInput fullWidth placeholder="Comentario de la atención">
               </div>
 

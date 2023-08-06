@@ -1,17 +1,13 @@
 import { Component } from '@angular/core';
 import {LocalDataSource, ServerDataSource} from 'ng2-smart-table';
-
-import { SmartTableData } from '../../../@core/data/smart-table';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {ServiceConstants} from "../../../constants/ServiceConstants";
-import {EstadoCasoTecnicoService} from "../../../services/EstadoCasoTecnico/EstadoCasoTecnicoService";
-import {AreaService} from "../../../services/Area/AreaService";
 import {ClienteService} from "../../../services/Cliente/ClienteService";
 import {ContratoService} from "../../../services/Contrato/ContratoService";
 import {NbToastrService} from "@nebular/theme";
 
 @Component({
-  selector: 'suministro-table',
+  selector: 'cliente-table',
   templateUrl: './cliente.component.html',
   styleUrls: ['./cliente.component.scss'],
 })

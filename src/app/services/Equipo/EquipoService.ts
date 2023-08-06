@@ -25,7 +25,10 @@ export class EquipoService {
         estadoId : number,
         sedeId : number,
         areaId : number,
-        clienteId : number){
+        clienteId : number,
+        estadoContractualId : number,
+        ubicacionId : number,
+        ddc : string){
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post(ServiceConstants.GET_EQUIPO_PATH,{
       'serie': serie,
@@ -33,7 +36,10 @@ export class EquipoService {
       'estadoId': estadoId,
       'sedeId': sedeId,
       'areaId': areaId,
-      'clienteId': clienteId
+      'clienteId': clienteId,
+      'estadoContractualId': estadoContractualId,
+      'ubicacionEquipoId': ubicacionId,
+      'ddc': ddc
     },{ headers: headers});
   }
 
@@ -43,7 +49,10 @@ export class EquipoService {
                 estadoId : number,
                 sedeId : number,
                 areaId : number,
-                clienteId : number){
+                clienteId : number,
+                estadoContractualId : number,
+                ubicacionId : number,
+                ddc : string){
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put(ServiceConstants.GET_EQUIPO_PATH+'/'+id,
       {
@@ -53,7 +62,10 @@ export class EquipoService {
         'estadoId': estadoId,
         'sedeId': sedeId,
         'areaId': areaId,
-        'clienteId': clienteId
+        'clienteId': clienteId,
+        'estadoContractualId': estadoContractualId,
+        'ubicacionEquipoId': ubicacionId,
+        'ddc': ddc
       },{ headers: headers});
   }
 }
